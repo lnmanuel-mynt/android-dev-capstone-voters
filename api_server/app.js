@@ -48,7 +48,7 @@ app.post("/signup", async (req, res) => {
         });
     } catch (err) {
         console.log(`Error Inserting Data: ${err}`);
-        res.status(401).send({
+        res.status(400).send({
             message: "Failed to create user.",
         });
     }
