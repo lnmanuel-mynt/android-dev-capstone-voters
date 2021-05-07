@@ -2,6 +2,39 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navgraph">
+    android:id="@+id/navgraph"
+    app:startDestination="@id/candidatesLevelFragment">
 
+    <fragment
+        android:id="@+id/candidatesLevelFragment"
+        android:name="ph.apper.android.capstone.voters.CandidatesLevelFragment"
+        android:label="fragment_candidates_level"
+        tools:layout="@layout/fragment_candidates_level" >
+        <action
+            android:id="@+id/action_candidatesLevelFragment_to_positionsFragment"
+            app:destination="@id/positionsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/positionsFragment"
+        android:name="ph.apper.android.capstone.voters.PositionsFragment"
+        android:label="fragment_positions"
+        tools:layout="@layout/fragment_positions" >
+        <action
+            android:id="@+id/action_positionsFragment_to_candidatesFragment"
+            app:destination="@id/candidatesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/candidatesFragment"
+        android:name="ph.apper.android.capstone.voters.CandidatesFragment"
+        android:label="fragment_candidates"
+        tools:layout="@layout/fragment_candidates" >
+        <action
+            android:id="@+id/action_candidatesFragment_to_candidateProfileFragment"
+            app:destination="@id/candidateProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/candidateProfileFragment"
+        android:name="ph.apper.android.capstone.voters.CandidateProfileFragment"
+        android:label="fragment_candidate_profile"
+        tools:layout="@layout/fragment_candidate_profile" />
 </navigation>
