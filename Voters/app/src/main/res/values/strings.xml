@@ -1,3 +1,38 @@
 <resources>
     <string name="app_name">Voters</string>
+    <!-- Strings used for fragment navigation -->
+    <string name="find_my_precinct_fragment_label">Find My Precinct Fragment</string>
+    <string name="registration_personal_label">Registration Personal Fragment</string>
+    <string name="registration_residence_label">Registration Residence Fragment</string>
+    <string name="registration_processing_label">Registration Processing Fragment</string>
+    <!-- Strings used for fragment titles -->
+    <string name="find_my_precinct_fragment_title">Find My Precinct</string>
+    <!-- Strings used for search result dialog -->
+    <string name="result_label">Search Result</string>
+    <string name="result">This is where the search result will be placed.</string>
+    <!-- Strings used for buttons -->
+    <string name="next_button">Next</string>
+    <string name="submit_button">Submit</string>
+    <string name="ok_button">OK</string>
+    <string name="search_button">Search</string>
+    <string name="back_button">←</string>
+    <string name="close_button">☓</string>
+    <!-- Strings used for hints -->
+    <string name="first_name">First Name</string>
+    <string name="middle_name">Middle Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="house_street">House No. / Street</string>
+    <string name="bararangay">Barangay</string>
+    <string name="city">City</string>
+    <string name="province">Province</string>
+    <string name="years_in_city">Number of Years in City</string>
+    <string name="years_in_ph">Number of Years in Philippines</string>
+    <!-- Strings used for registration header -->
+    <string name="personal_info_label">Personal Information</string>
+    <string name="residence_info_label">Residence Information</string>
+    <!-- Strings used for registration label -->
+    <string name="birthdate_label">Birthdate: </string>
+    <string name="birthplace_label">Place of Birth: </string>
+    <string name="civil_status">Civil Status: </string>
+    <string name="sex">Sex: </string>
 </resources>
