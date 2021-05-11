@@ -30,7 +30,10 @@ app.post("/signup", async (req, res) => {
     var lastName = req.body.last_name;
 
     var rows = await getUserByEmail(email, "app_users");
-    if (rows != "") return res.status(400).send("Email already registered.");
+    if (rows != "")
+        return res.status(400).send({
+            message: "Email already registered.",
+        });
 
     let insertQry = "INSERT INTO ??(??) VALUES (UUID_TO_BIN(?), ?)";
 
@@ -184,6 +187,33 @@ app.get("/voter/:id", async (req, res) => {
     }
 });
 
+app.get("/appusers", async (req, res) => {
+    let query = mysql.format("SELECT * FROM ??", ["app_users"]);
+    try {
+        var rows = await db_query(query, dbPool);
+        rows = rows.map((v) => Object.assign({}, v));
+        // rows.asyncforEach((row) => {
+        //     row.id = Bin2HexUUID(row.id);
+        // });
+        return res.status(200).send(rows);
+    } catch (err) {
+        return res.status(400).send(err);
+    }
+});
+
+app.get("/voters", async (req, res) => {
+    let query = mysql.format("SELECT * FROM ??", ["voters"]);
+    try {
+        var rows = await db_query(query, dbPool);
+        rows = rows.map((v) => Object.assign({}, v));
+        // rows = await rows.forEach((row) => {
+        //     row.app_user_id = Bin2HexUUID(row.app_user_id);
+        // });
+        return res.status(200).send(rows);
+    } catch (err) {
+        return res.status(400).send(err);
+    }
+});
 async function getUserByEmail(email, table) {
     var selectQry = "SELECT * FROM ?? WHERE ?? = ?";
 
