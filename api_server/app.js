@@ -29,8 +29,7 @@ app.post("/signup", async (req, res) => {
     var middleName = req.body.middle_name;
     var lastName = req.body.last_name;
 
-    var rows = getUserByEmail(email, "app_users");
-
+    var rows = await getUserByEmail(email, "app_users");
     if (rows != "") return res.status(400).send("Email already registered.");
 
     let insertQry = "INSERT INTO ??(??) VALUES (UUID_TO_BIN(?), ?)";
@@ -62,11 +61,6 @@ app.post("/login", async (req, res) => {
     var rows = await getUserByEmail(email, "app_users");
 
     if (rows == "")
-        return res.status(401).send({
-            message: "Invalid Credentials.",
-        });
-
-    if (rows[0].email != email)
         return res.status(401).send({
             message: "Invalid Credentials.",
         });
@@ -131,6 +125,7 @@ app.post("/voter/register", async (req, res) => {
             "isRegistered",
             "voter_id_number",
             "precinct_number",
+            "registrationStatus",
         ],
         appUserId,
         [
@@ -152,6 +147,7 @@ app.post("/voter/register", async (req, res) => {
             false,
             null,
             null,
+            "PENDING",
         ],
     ]);
 
@@ -168,8 +164,15 @@ app.post("/voter/register", async (req, res) => {
     }
 });
 
+app.get("/voter/:id", async (req, res) => {
+    var voterId = req.params.id;
+
+    var voterInfo = await getUserById(voterId, voters);
+    console.log(voterInfo[0]);
+});
+
 async function getUserByEmail(email, table) {
-    var selectQry = "SELECT * FROM ?? WHERE ?? LIKE ?";
+    var selectQry = "SELECT * FROM ?? WHERE ?? = ?";
 
     let query = mysql.format(selectQry, [table, "email", email]);
     try {
@@ -181,7 +184,7 @@ async function getUserByEmail(email, table) {
 }
 
 async function getUserById(id, table) {
-    var selectQry = "SELECT * FROM ?? WHERE BIN_TO_UUID(??) LIKE ?";
+    var selectQry = "SELECT * FROM ?? WHERE BIN_TO_UUID(??) = ?";
 
     let query = mysql.format(selectQry, [table, "app_user_id", id]);
     try {
