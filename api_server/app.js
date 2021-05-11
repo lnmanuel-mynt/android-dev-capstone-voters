@@ -191,6 +191,80 @@ app.get("/voter/:id", async (req, res) => {
     }
 });
 
+app.post("/findmyprecinct", async (req, res) => {
+    var firstName = req.body.first_name;
+    var middleName = req.body.middle_name;
+    var lastName = req.body.last_name;
+    var birthDate = req.body.birth_date;
+    var selectQry =
+        "SELECT ?? FROM ?? WHERE first_name = ? AND middle_name = ? AND last_name = ? and birth_date = ? and isRegistered = true";
+
+    let query = mysql.format(selectQry, [
+        "precinct_number",
+        "voters",
+        firstName,
+        middleName,
+        lastName,
+        birthDate,
+    ]);
+
+    try {
+        var rows = await db_query(query, dbPool);
+
+        if (rows == "")
+            return res.status(404).send({ message: "No precinct assigned." });
+
+        selectQry = "SELECT * FROM  ??  WHERE precinct_number = ?";
+        query = mysql.format(selectQry, ["precinct", rows[0].precinct_number]);
+        console.log(query);
+        try {
+            var precinctData = await db_query(query, dbPool);
+            console.log(precinctData);
+            if (precinctData == "")
+                return res.status(400).send({
+                    message: "No Precinct Data Found",
+                });
+            return res.status(200).send({
+                precinct_data: precinctData[0],
+            });
+        } catch (err) {
+            return res.status(400).send({
+                message: "Failed to Fetch Precinct Data. " + err,
+            });
+        }
+    } catch (err) {
+        return res.status(400).send({
+            message: "Failed to Fetch Precinct Data. " + err,
+        });
+    }
+});
+
+app.post("/confirmvoter", async (req, res) => {
+    var id = req.body.id;
+    var precinctNumber = req.body.precinct_number;
+    var voterIdNumber = req.body.voter_id_number;
+
+    var updateQry =
+        "UPDATE voters SET ?? = ?, ?? = ? , ?? = ?, ?? = ? where app_user_id = UUID_TO_BIN(?)";
+    let query = mysql.format(updateQry, [
+        "isRegistered",
+        true,
+        "voter_id_number",
+        voterIdNumber,
+        "precinct_number",
+        precinctNumber,
+        "registration_status",
+        "ACTIVE",
+        id,
+    ]);
+    try {
+        await db_query(query, dbPool);
+        return res.status(200).send();
+    } catch (err) {
+        console.log(err);
+        return res.status(400).send();
+    }
+});
 app.get("/appusers", async (req, res) => {
     let query = mysql.format("SELECT * FROM ??", ["app_users"]);
     try {
@@ -212,8 +286,19 @@ app.get("/voters", async (req, res) => {
         var rows = await db_query(query, dbPool);
         rows = rows.map((v) => Object.assign({}, v));
         await rows.forEach((row) => {
-            row.id = Bin2HexUUID(row.id);
+            row.app_user_id = Bin2HexUUID(row.app_user_id);
         });
+        return res.status(200).send(rows);
+    } catch (err) {
+        return res.status(400).send(err);
+    }
+});
+
+app.get("/precincts", async (req, res) => {
+    let query = mysql.format("SELECT * FROM ??", ["precinct"]);
+    try {
+        var rows = await db_query(query, dbPool);
+        rows = rows.map((v) => Object.assign({}, v));
         return res.status(200).send(rows);
     } catch (err) {
         return res.status(400).send(err);
