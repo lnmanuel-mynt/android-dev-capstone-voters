@@ -196,9 +196,10 @@ app.get("/appusers", async (req, res) => {
     try {
         var rows = await db_query(query, dbPool);
         rows = rows.map((v) => Object.assign({}, v));
-        // rows.asyncforEach((row) => {
-        //     row.id = Bin2HexUUID(row.id);
-        // });
+        await rows.forEach((row) => {
+            row.id = Bin2HexUUID(row.id);
+        });
+
         return res.status(200).send(rows);
     } catch (err) {
         return res.status(400).send(err);
@@ -210,9 +211,9 @@ app.get("/voters", async (req, res) => {
     try {
         var rows = await db_query(query, dbPool);
         rows = rows.map((v) => Object.assign({}, v));
-        // rows = await rows.forEach((row) => {
-        //     row.app_user_id = Bin2HexUUID(row.app_user_id);
-        // });
+        await rows.forEach((row) => {
+            row.id = Bin2HexUUID(row.id);
+        });
         return res.status(200).send(rows);
     } catch (err) {
         return res.status(400).send(err);
