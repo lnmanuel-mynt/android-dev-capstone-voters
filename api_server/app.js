@@ -362,7 +362,11 @@ app.get("/voters", async (req, res) => {
         var rows = await db_query(query, dbPool);
         rows = rows.map((v) => Object.assign({}, v));
         await rows.forEach((row) => {
-            row.app_user_id = Bin2HexUUID(row.app_user_id);
+            try {
+                row.app_user_id = Bin2HexUUID(row.app_user_id);
+            } catch (err) {
+                console.log("Error parsing BIN TO UUID");
+            }
         });
         return res.status(200).send(rows);
     } catch (err) {
