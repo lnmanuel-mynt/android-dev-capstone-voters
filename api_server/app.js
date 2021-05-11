@@ -208,10 +208,12 @@ app.get("/candidates/local/:position", async (req, res) => {
 
     try {
         candidates = await db_query(query, dbPool);
-        if(candidates == "")
-            res.status(404).send({message: "No Candidates for this Position."});
-            
-        res.status(200).send(candidates);
+        if (candidates == "")
+            return res
+                .status(404)
+                .send({ message: "No Candidates for this Position." });
+
+        return res.status(200).send(candidates);
     } catch (err) {
         return res.status(400).send({
             message: "Error in Fetching Candidates: " + err,
@@ -219,7 +221,7 @@ app.get("/candidates/local/:position", async (req, res) => {
     }
 });
 
-app.get("/candidates/national/:position", (req, res) => {
+app.get("/candidates/national/:position", async (req, res) => {
     var position = req.params.position;
 
     var selectQry = "SELECT * FROM ?? where ?? = ? and ?? = ?";
@@ -233,10 +235,12 @@ app.get("/candidates/national/:position", (req, res) => {
 
     try {
         candidates = await db_query(query, dbPool);
-        if(candidates == "")
-            res.status(404).send({message: "No Candidates for this Position."});
+        if (candidates == "")
+            return res
+                .status(404)
+                .send({ message: "No Candidates for this Position." });
 
-        res.status(200).send(candidates);
+        return res.status(200).send(candidates);
     } catch (err) {
         return res.status(400).send({
             message: "Error in Fetching Candidates: " + err,
@@ -244,23 +248,25 @@ app.get("/candidates/national/:position", (req, res) => {
     }
 });
 
-app.get("/candidate/:id", (req, res) => {
-    var candidateId = req.params.id; 
+app.get("/candidate/:id", async (req, res) => {
+    var candidateId = req.params.id;
 
-    var selectQry = "SELECT * FROM ?? WHERE ?? = ?"
-    let query = mysql.format(selectQry, [
-        "candidates",
-        "id", candidateId
-    ])
+    var selectQry = "SELECT * FROM ?? WHERE ?? = ?";
+    let query = mysql.format(selectQry, ["candidates", "id", candidateId]);
 
-    try{
+    try {
         candidateProfile = await db_query(query, dbPool);
-        if(candidateProfile == "")
-            res.status(404).send({
-                message: "Candidate Profile Not Found."
-            })
+        if (candidateProfile == "")
+            return res.status(404).send({
+                message: "Candidate Profile Not Found.",
+            });
+        return res.status(200).send(candidateProfile[0]);
+    } catch (err) {
+        return res.status(400).send({
+            message: "Error in Fetching Candidate Profile: " + err,
+        });
     }
-})
+});
 
 app.post("/findmyprecinct", async (req, res) => {
     var firstName = req.body.first_name;
