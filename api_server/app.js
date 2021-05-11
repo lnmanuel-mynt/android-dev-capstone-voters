@@ -151,7 +151,6 @@ app.post("/voter/register", async (req, res) => {
         ],
     ]);
 
-    console.log(query);
     try {
         await db_query(query, dbPool);
         res.status(201).send({
