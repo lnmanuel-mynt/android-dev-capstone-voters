@@ -166,8 +166,22 @@ app.post("/voter/register", async (req, res) => {
 app.get("/voter/:id", async (req, res) => {
     var voterId = req.params.id;
 
-    var voterInfo = await getUserById(voterId, voters);
-    console.log(voterInfo[0]);
+    try {
+        var voterInfo = await getUserById(voterId, "voters");
+        if (voterInfo == "")
+            return res.status(404).send({
+                message: "Voter Not Found.",
+            });
+
+        voterInfo = voterInfo.map((v) => Object.assign({}, v));
+        voterInfo[0].app_user_id = Bin2HexUUID(voterInfo[0].app_user_id);
+        return res.status(200).send(voterInfo[0]);
+    } catch (err) {
+        console.log("Caught Error in Fetching Voter Info " + err);
+        return res.status(400).send({
+            message: "Error in fetching voter info: " + err,
+        });
+    }
 });
 
 async function getUserByEmail(email, table) {
@@ -203,6 +217,23 @@ async function db_query(query, pool) {
     });
 
     return rows;
+}
+
+function Bin2HexUUID(bin) {
+    var hex = new Buffer(bin, "base64").toString("hex");
+    return hex.replace(/^(.{8})(.{4})(.{4})(.{4})(.{12})$/, function () {
+        return (
+            arguments[1] +
+            "-" +
+            arguments[2] +
+            "-" +
+            arguments[3] +
+            "-" +
+            arguments[4] +
+            "-" +
+            arguments[5]
+        );
+    });
 }
 
 app.listen(5000, () => {
