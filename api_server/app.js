@@ -125,7 +125,7 @@ app.post("/voter/register", async (req, res) => {
             "isRegistered",
             "voter_id_number",
             "precinct_number",
-            "registrationStatus",
+            "registration_status",
         ],
         appUserId,
         [
