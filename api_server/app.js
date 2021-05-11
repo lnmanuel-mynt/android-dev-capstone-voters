@@ -71,7 +71,6 @@ app.post("/login", async (req, res) => {
     bcrypt.compare(password, results[0].passwd, function (err, result) {
         if (result == true)
             return res.status(200).send({
-                message: `${results[0].first_name} ${results[0].last_name} logged in.`,
                 profile: rows[0],
             });
         return res.status(401).send({
