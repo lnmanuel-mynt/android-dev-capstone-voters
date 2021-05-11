@@ -95,6 +95,7 @@ app.post("/voter/register", async (req, res) => {
     var civilStatus = req.body.civil_status;
     var sex = req.body.sex;
     var street = req.body.street;
+    var subdivision = req.body.subdivision;
     var barangay = req.body.barangay;
     var city = req.body.city;
     var province = req.body.province;
@@ -124,6 +125,7 @@ app.post("/voter/register", async (req, res) => {
             "civil_status",
             "sex",
             "street",
+            "subdivision",
             "barangay",
             "city",
             "province",
@@ -146,6 +148,7 @@ app.post("/voter/register", async (req, res) => {
             civilStatus,
             sex,
             street,
+            subdivision,
             barangay,
             city,
             province,
@@ -302,6 +305,7 @@ app.get("/precincts", async (req, res) => {
         return res.status(400).send(err);
     }
 });
+
 async function getUserByEmail(email, table) {
     var selectQry = "SELECT * FROM ?? WHERE ?? = ?";
 
