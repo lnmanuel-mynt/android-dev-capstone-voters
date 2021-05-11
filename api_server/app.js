@@ -194,6 +194,74 @@ app.get("/voter/:id", async (req, res) => {
     }
 });
 
+app.get("/candidates/local/:position", async (req, res) => {
+    var position = req.params.position;
+
+    var selectQry = "SELECT * FROM ?? where ?? = ? and ?? = ?";
+    let query = mysql.format(selectQry, [
+        "candidates",
+        "is_national",
+        false,
+        "position",
+        position,
+    ]);
+
+    try {
+        candidates = await db_query(query, dbPool);
+        if(candidates == "")
+            res.status(404).send({message: "No Candidates for this Position."});
+            
+        res.status(200).send(candidates);
+    } catch (err) {
+        return res.status(400).send({
+            message: "Error in Fetching Candidates: " + err,
+        });
+    }
+});
+
+app.get("/candidates/national/:position", (req, res) => {
+    var position = req.params.position;
+
+    var selectQry = "SELECT * FROM ?? where ?? = ? and ?? = ?";
+    let query = mysql.format(selectQry, [
+        "candidates",
+        "is_national",
+        true,
+        "position",
+        position,
+    ]);
+
+    try {
+        candidates = await db_query(query, dbPool);
+        if(candidates == "")
+            res.status(404).send({message: "No Candidates for this Position."});
+
+        res.status(200).send(candidates);
+    } catch (err) {
+        return res.status(400).send({
+            message: "Error in Fetching Candidates: " + err,
+        });
+    }
+});
+
+app.get("/candidate/:id", (req, res) => {
+    var candidateId = req.params.id; 
+
+    var selectQry = "SELECT * FROM ?? WHERE ?? = ?"
+    let query = mysql.format(selectQry, [
+        "candidates",
+        "id", candidateId
+    ])
+
+    try{
+        candidateProfile = await db_query(query, dbPool);
+        if(candidateProfile == "")
+            res.status(404).send({
+                message: "Candidate Profile Not Found."
+            })
+    }
+})
+
 app.post("/findmyprecinct", async (req, res) => {
     var firstName = req.body.first_name;
     var middleName = req.body.middle_name;
@@ -266,6 +334,7 @@ app.post("/confirmvoter", async (req, res) => {
         return res.status(400).send();
     }
 });
+
 app.get("/appusers", async (req, res) => {
     let query = mysql.format("SELECT * FROM ??", ["app_users"]);
     try {
