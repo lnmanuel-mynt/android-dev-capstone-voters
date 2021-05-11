@@ -216,10 +216,8 @@ app.post("/findmyprecinct", async (req, res) => {
 
         selectQry = "SELECT * FROM  ??  WHERE precinct_number = ?";
         query = mysql.format(selectQry, ["precinct", rows[0].precinct_number]);
-        console.log(query);
         try {
             var precinctData = await db_query(query, dbPool);
-            console.log(precinctData);
             if (precinctData == "")
                 return res.status(400).send({
                     message: "No Precinct Data Found",
