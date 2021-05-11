@@ -68,11 +68,16 @@ app.post("/login", async (req, res) => {
             message: "Invalid Credentials.",
         });
 
-    bcrypt.compare(password, results[0].passwd, function (err, result) {
-        if (result == true)
+    rows[0].id = Bin2HexUUID(rows[0].id);
+
+    bcrypt.compare(password, rows[0].passwd, function (err, result) {
+        if (result == true) {
+            delete rows[0]["passwd"];
             return res.status(200).send({
                 profile: rows[0],
             });
+        }
+
         return res.status(401).send({
             message: "Invalid Credentials.",
         });
