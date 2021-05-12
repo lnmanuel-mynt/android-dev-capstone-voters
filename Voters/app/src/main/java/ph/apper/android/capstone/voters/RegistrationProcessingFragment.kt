@@ -1,5 +1,6 @@
 package ph.apper.android.capstone.voters
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +23,9 @@ class RegistrationProcessingFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         view.findViewById<TextView>(R.id.tv_close).setOnClickListener {
-            findNavController().navigate(R.id.action_RegistrationProcessingFragment_to_RegistrationPersonalFragment)
+            var nextActivityIntent: Intent = Intent(requireContext(), RegistrationActivity::class.java)
+            // finish()
+            startActivity(nextActivityIntent)
         }
     }
 }

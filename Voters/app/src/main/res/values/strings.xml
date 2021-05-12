@@ -9,7 +9,8 @@
     <string name="find_my_precinct_fragment_title">Find My Precinct</string>
     <!-- Strings used for search result dialog -->
     <string name="result_label">Search Result</string>
-    <string name="result">This is where the search result will be placed.</string>
+    <string name="precinct_number">Precinct Number</string>
+    <string name="polling_place">Polling Place</string>
     <!-- Strings used for buttons -->
     <string name="next_button">Next</string>
     <string name="submit_button">Submit</string>
@@ -22,7 +23,8 @@
     <string name="middle_name">Middle Name</string>
     <string name="last_name">Last Name</string>
     <string name="house_street">House No. / Street</string>
-    <string name="bararangay">Barangay</string>
+    <string name="subdivision">Subdivision</string>
+    <string name="barangay">Barangay</string>
     <string name="city">City</string>
     <string name="province">Province</string>
     <string name="years_in_city">Number of Years in City</string>

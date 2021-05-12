@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navgraph"
+    app:startDestination="@id/RegistrationFragment" >
+
+    <fragment
+        android:id="@+id/RegistrationFragment"
+        android:name="ph.apper.android.capstone.voters.RegistrationFragment"
+        android:label="@string/registration_personal_label"
+        tools:layout="@layout/fragment_registration" >
+
+        <action
+            android:id="@+id/action_RegistrationFragment_to_RegistrationProcessingFragment"
+            app:destination="@id/RegistrationProcessingFragment" />
+        <action
+            android:id="@+id/action_RegistrationFragment_to_HomeFragment"
+            app:destination="@id/FindMyPrecinctFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/RegistrationProcessingFragment"
+        android:name="ph.apper.android.capstone.voters.RegistrationProcessingFragment"
+        android:label="@string/registration_processing_label"
+        tools:layout="@layout/fragment_registration_processing" >
+    </fragment>
+</navigation>
