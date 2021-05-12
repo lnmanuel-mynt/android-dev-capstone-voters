@@ -47,7 +47,7 @@
 
     <Button
         android:id="@+id/bt_profile"
-        android:drawableTop="@drawable/placeholder"
+        android:drawableTop="@drawable/layout_profile"
         android:text="My Profile"
         android:textAllCaps="false"
         android:textColor="@color/black"
@@ -62,7 +62,7 @@
 
     <Button
         android:id="@+id/bt_candidates"
-        android:drawableTop="@drawable/placeholder"
+        android:drawableTop="@drawable/layout_candidates"
         android:text="Candidates"
         android:textAllCaps="false"
         android:textColor="@color/black"
@@ -76,7 +76,7 @@
 
     <Button
         android:id="@+id/bt_registration"
-        android:drawableTop="@drawable/placeholder"
+        android:drawableTop="@drawable/layout_registration"
         android:text="Registration"
         android:textAllCaps="false"
         android:textColor="@color/black"
@@ -92,7 +92,7 @@
 
     <Button
         android:id="@+id/bt_find"
-        android:drawableTop="@drawable/placeholder"
+        android:drawableTop="@drawable/layout_findprecinct"
         android:text="Find My Precint"
         android:textAllCaps="false"
         android:textColor="@color/black"

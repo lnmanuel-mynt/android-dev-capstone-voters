@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_home.*
@@ -13,6 +14,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
     // Shared Preferences parameters
     private val EMAIL_KEY = "email_key"
+    private val FIRST_NAME = "first_name"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,9 +24,12 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         bt_find.setOnClickListener(this)
 
         val sharedPref = this.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-        val email = sharedPref.getString(EMAIL_KEY, "user")
+        val email = sharedPref.getString(EMAIL_KEY, "email")
+        val firstName = sharedPref.getString(FIRST_NAME, "user")
         Log.d("SHARED EMAIL", "email: ${email}")
-        Toast.makeText(applicationContext, "Welcome, ${email}!", Toast.LENGTH_LONG).show()
+        val toast = Toast.makeText(applicationContext, "Welcome, ${firstName}!", Toast.LENGTH_LONG)
+        toast.setGravity(Gravity.BOTTOM, 0,32)
+        toast.show()
     }
 
     override fun onClick(v: View?) {
