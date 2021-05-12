@@ -18,6 +18,7 @@ POST /signup
 }
 
 201 CREATED
+401 UNAUTHORIZED
 ```
 
 **Login**
@@ -37,7 +38,7 @@ POST /login
 	"email": ""
 }
 
-400 BAD REQUEST
+404 NOT FOUND
 ```
 
 **Get Voter**
