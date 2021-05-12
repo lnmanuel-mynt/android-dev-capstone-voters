@@ -82,6 +82,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 t.message?.let { Log.d("LOGIN API FAILURE", it) }
+                Toast.makeText(applicationContext, "Failed to connect to server.", Toast.LENGTH_SHORT).show()
             }
 
         })
