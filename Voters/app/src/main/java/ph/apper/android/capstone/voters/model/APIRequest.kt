@@ -17,7 +17,7 @@ class LoginRequest {
 
 // todo add email payload
 class RegisterRequest {
-    @SerializedName("app_user_id")
+    @SerializedName("id")
     var id = ""
     @SerializedName("first_name")
     var firstName = ""
@@ -49,12 +49,14 @@ class RegisterRequest {
     var yearsInCity = ""
     @SerializedName("years_in_ph")
     var yearsInPH = ""
+    @SerializedName("date_registered")
+    var dateRegistered = ""
 
     constructor(id: String, firstName: String, middleName: String, lastName: String,
                 birthDate: String, birthProvince: String, birthCity: String,
                 civilStatus: String, sex: String,
                 street: String, subdivision: String, barangay: String, city: String, province: String,
-                yearsInCity: String, yearsInPH: String) {
+                yearsInCity: String, yearsInPH: String, dateRegistered: String) {
         this.id = id
         this.firstName = firstName
         this.middleName = middleName
@@ -71,16 +73,20 @@ class RegisterRequest {
         this.province = province
         this.yearsInCity = yearsInCity
         this.yearsInPH = yearsInPH
+        this.dateRegistered = dateRegistered
     }
 }
 
 class FindMyPrecinctRequest {
     @SerializedName("first_name")
     var firstName = ""
+
     @SerializedName("middle_name")
     var middleName = ""
+
     @SerializedName("last_name")
     var lastName = ""
+
     @SerializedName("birth_date")
     var birthDate = ""
 
@@ -89,7 +95,8 @@ class FindMyPrecinctRequest {
         this.middleName = middleName
         this.lastName = lastName
         this.birthDate = birthDate
-
+    }
+}
 class SignupRequest {
 
     @SerializedName("first_name")

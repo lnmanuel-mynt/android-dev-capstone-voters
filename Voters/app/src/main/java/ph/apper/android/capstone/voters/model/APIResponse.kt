@@ -48,15 +48,19 @@ class FindMyPrecinctResponse {
 class PrecinctInfo {
     @SerializedName(value = "precinct_number")
     var precinctNumber = ""
+
     @SerializedName(value = "barangay")
     var barangay = ""
+
     @SerializedName(value = "city")
     var city = ""
+
     @SerializedName(value = "province")
     var province = ""
+
     @SerializedName(value = "polling_place")
     var pollingPlace = ""
-
+}
 class SignupResponse {
 
     @SerializedName("message")
