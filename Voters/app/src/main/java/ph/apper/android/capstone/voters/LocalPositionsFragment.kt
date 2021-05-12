@@ -1,6 +1,7 @@
 package ph.apper.android.capstone.voters
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_local_positions.view.*
 import ph.apper.android.capstone.voters.adapters.CandidatePositionsAdapter
 
 
-class LocalPositionsFragment : Fragment(), View.OnClickListener{
+class LocalPositionsFragment : Fragment(), View.OnClickListener, CandidatePositionsAdapter.OnItemClickListener{
     lateinit var navController: NavController
 
     companion object {
@@ -49,7 +50,7 @@ class LocalPositionsFragment : Fragment(), View.OnClickListener{
         btn_natl_positions.setOnClickListener(this)
 
         view.rv_position_list.layoutManager = LinearLayoutManager(this.requireActivity().applicationContext)
-        LocalPositionsFragment.positionsAdapter = CandidatePositionsAdapter(localPositionsArray, this.requireActivity().applicationContext)
+        LocalPositionsFragment.positionsAdapter = CandidatePositionsAdapter(localPositionsArray, this.requireActivity().applicationContext, this)
         view.rv_position_list.adapter = LocalPositionsFragment.positionsAdapter
     }
 
@@ -59,5 +60,9 @@ class LocalPositionsFragment : Fragment(), View.OnClickListener{
                 navController.navigate(R.id.action_localPositionsFragment_to_nationalPositionsFragment)
             }
         }
+    }
+
+    override fun onItemClick(position: Int) {
+        Log.d("POSITION", "${localPositionsArray[position]}")
     }
 }
