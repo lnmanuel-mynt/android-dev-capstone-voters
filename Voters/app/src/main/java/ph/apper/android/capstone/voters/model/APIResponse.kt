@@ -4,10 +4,10 @@ import com.google.gson.annotations.SerializedName
 
 class LoginResponse {
     @SerializedName("profile")
-    var profile = Profile()
+    var profile: UserInfo = UserInfo()
 }
 
-class Profile {
+class UserInfo {
     @SerializedName("id")
     var id = ""
     @SerializedName("first_name")
@@ -56,4 +56,32 @@ class PrecinctInfo {
     var province = ""
     @SerializedName(value = "polling_place")
     var pollingPlace = ""
+
+class SignupResponse {
+
+    @SerializedName("message")
+    var message: String = ""
+
+}
+
+class GetUserResponse {
+
+    @SerializedName("registration_status")
+    var status = ""
+
+    @SerializedName("precinct_number")
+    var precinctNumber = ""
+
+    @SerializedName("voter_id_number")
+    var votersId = ""
+
+    @SerializedName("barangay")
+    var barangay = ""
+
+    @SerializedName("city")
+    var city = ""
+
+    @SerializedName("province")
+    var province = ""
+
 }
