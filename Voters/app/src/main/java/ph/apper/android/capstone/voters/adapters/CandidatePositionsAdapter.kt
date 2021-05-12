@@ -24,12 +24,12 @@ RecyclerView.Adapter<CandidatePositionsAdapter.PositionViewHolder>(){
             view.setOnClickListener(this)
         }
 
-        override fun onClick(v: View?):Boolean {
+        override fun onClick(v: View?) {
             val position: Int = adapterPosition
             if(position != RecyclerView.NO_POSITION){
                 listener.onItemClick(position)
             }
-            return true
+//            return true
         }
     }
 
