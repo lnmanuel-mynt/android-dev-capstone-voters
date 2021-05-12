@@ -21,7 +21,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     // Shared Preferences parameters
     private val USER_ID = "user_id"
     private val EMAIL_KEY = "email_key"
-    private val PASSWORD_KEY = "password_key"
+    private val FIRST_NAME = "first_name"
+    private val MIDDLE_NAME = "middle_name"
+    private val LAST_NAME = "last_name"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,12 +63,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     Toast.makeText(applicationContext, "Invalid login credentials!", Toast.LENGTH_LONG).show()
                 } else {
                     val response: LoginResponse = response.body()!!
-                    val id = response.profile.id
                     val sharedPref = this@LoginActivity.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
                     with (sharedPref.edit()) {
-                        putString(USER_ID, id)
-                        putString(EMAIL_KEY, email)
-                        putString(PASSWORD_KEY, password)
+                        putString(USER_ID, response.profile.id)
+                        putString(EMAIL_KEY, response.profile.email)
+                        putString(FIRST_NAME, response.profile.firstName)
+                        putString(MIDDLE_NAME, response.profile.middleName)
+                        putString(LAST_NAME, response.profile.lastName)
                         apply()
                         commit()
                     }
