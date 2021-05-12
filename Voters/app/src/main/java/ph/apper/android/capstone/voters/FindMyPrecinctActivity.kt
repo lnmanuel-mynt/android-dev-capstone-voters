@@ -3,7 +3,6 @@ package ph.apper.android.capstone.voters
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.DatePicker
 import android.widget.Toast
@@ -11,6 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_find_my_precinct.*
 import ph.apper.android.capstone.voters.api.VoterAPIClient
+import ph.apper.android.capstone.voters.fragments.SearchResultDialogFragment
 import ph.apper.android.capstone.voters.model.FindMyPrecinctRequest
 import ph.apper.android.capstone.voters.model.FindMyPrecinctResponse
 import retrofit2.Call
@@ -49,7 +49,7 @@ class FindMyPrecinctActivity : AppCompatActivity(), View.OnClickListener {
                 findMyPrecinct(firstName, middleName, lastName, birthDate)
             }
             tv_back.id -> {
-                var nextActivityIntent: Intent = Intent(applicationContext, RegistrationActivity::class.java)
+                var nextActivityIntent: Intent = Intent(applicationContext, HomeActivity::class.java)
                 // finish()
                 startActivity(nextActivityIntent)
             }

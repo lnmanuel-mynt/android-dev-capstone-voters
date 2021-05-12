@@ -64,12 +64,18 @@ class SignupActivity : AppCompatActivity(), View.OnClickListener {
             ) {
                 if (response.code() == 400) {
                     Toast.makeText(applicationContext, "Failed to create user.", Toast.LENGTH_LONG).show()
+
+                } else {
+                    Toast.makeText(
+                        applicationContext,
+                        "Signup successful. Log-in to proceed",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    // Go to Login
+                    val nextActivityIntent = Intent(applicationContext, LoginActivity::class.java)
+                    finish()
+                    startActivity(nextActivityIntent)
                 }
-                Toast.makeText(applicationContext, "Signup successful. Log-in to proceed", Toast.LENGTH_LONG).show()
-                // Go to Login
-                val nextActivityIntent = Intent(applicationContext, LoginActivity::class.java)
-                finish()
-                startActivity(nextActivityIntent)
             }
 
             override fun onFailure(call: Call<SignupResponse>, t: Throwable) {

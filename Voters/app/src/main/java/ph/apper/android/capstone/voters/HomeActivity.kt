@@ -51,7 +51,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(nextActivityIntent)
             }
             bt_find.id -> {
-                val nextActivityIntent = Intent(applicationContext, MainActivity::class.java)
+                val nextActivityIntent = Intent(applicationContext, FindMyPrecinctActivity::class.java)
                 //finish()
                 startActivity(nextActivityIntent)
             }

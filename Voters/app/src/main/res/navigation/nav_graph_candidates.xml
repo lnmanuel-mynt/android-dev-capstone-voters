@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navgraph"
+    app:startDestination="@id/candidatesLevelFragment"
+ >
+
+    <fragment
+        android:id="@+id/candidatesLevelFragment"
+        android:name="ph.apper.android.capstone.voters.fragments.CandidatesLevelFragment"
+        android:label="fragment_candidates_level"
+        tools:layout="@layout/fragment_candidates_level" >
+        <action
+            android:id="@+id/action_candidatesLevelFragment_to_nationalPositionsFragment"
+            app:destination="@id/nationalPositionsFragment" />
+        <action
+            android:id="@+id/action_candidatesLevelFragment_to_localPositionsFragment"
+            app:destination="@id/localPositionsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/candidatesFragment"
+        android:name="ph.apper.android.capstone.voters.fragments.CandidatesFragment"
+        android:label="fragment_candidates"
+        tools:layout="@layout/fragment_candidates" >
+        <action
+            android:id="@+id/action_candidatesFragment_to_candidateProfileFragment"
+            app:destination="@id/candidateProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/candidateProfileFragment"
+        android:name="ph.apper.android.capstone.voters.fragments.CandidateProfileFragment"
+        android:label="fragment_candidate_profile"
+        tools:layout="@layout/fragment_candidate_profile" />
+    <fragment
+        android:id="@+id/localPositionsFragment"
+        android:name="ph.apper.android.capstone.voters.fragments.LocalPositionsFragment"
+        android:label="fragment_local_positions"
+        tools:layout="@layout/fragment_local_positions" >
+        <action
+            android:id="@+id/action_localPositionsFragment_to_candidatesFragment"
+            app:destination="@id/candidatesFragment" />
+        <action
+            android:id="@+id/action_localPositionsFragment_to_nationalPositionsFragment"
+            app:destination="@id/nationalPositionsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nationalPositionsFragment"
+        android:name="ph.apper.android.capstone.voters.fragments.NationalPositionsFragment"
+        android:label="fragment_national_positions"
+        tools:layout="@layout/fragment_national_positions" >
+        <action
+            android:id="@+id/action_nationalPositionsFragment_to_candidatesFragment"
+            app:destination="@id/candidatesFragment" />
+        <action
+            android:id="@+id/action_nationalPositionsFragment_to_localPositionsFragment"
+            app:destination="@id/localPositionsFragment" />
+    </fragment>
+</navigation>
