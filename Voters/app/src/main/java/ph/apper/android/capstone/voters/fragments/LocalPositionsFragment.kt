@@ -1,4 +1,4 @@
-package ph.apper.android.capstone.voters
+package ph.apper.android.capstone.voters.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +11,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_local_positions.*
 import kotlinx.android.synthetic.main.fragment_local_positions.view.*
+import ph.apper.android.capstone.voters.R
 import ph.apper.android.capstone.voters.adapters.CandidatePositionsAdapter
 
 
@@ -50,8 +51,8 @@ class LocalPositionsFragment : Fragment(), View.OnClickListener, CandidatePositi
         btn_natl_positions.setOnClickListener(this)
 
         view.rv_position_list.layoutManager = LinearLayoutManager(this.requireActivity().applicationContext)
-        LocalPositionsFragment.positionsAdapter = CandidatePositionsAdapter(localPositionsArray, this.requireActivity().applicationContext, this)
-        view.rv_position_list.adapter = LocalPositionsFragment.positionsAdapter
+        positionsAdapter = CandidatePositionsAdapter(localPositionsArray, this.requireActivity().applicationContext, this)
+        view.rv_position_list.adapter = positionsAdapter
     }
 
     override fun onClick(v: View?) {

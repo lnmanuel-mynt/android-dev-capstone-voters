@@ -1,4 +1,4 @@
-package ph.apper.android.capstone.voters
+package ph.apper.android.capstone.voters.fragments
 
 import android.content.res.Resources
 import android.graphics.Rect
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import kotlinx.android.synthetic.main.fragment_search_result_dialog.view.*
+import ph.apper.android.capstone.voters.R
 
 class SearchResultDialogFragment: DialogFragment() {
 

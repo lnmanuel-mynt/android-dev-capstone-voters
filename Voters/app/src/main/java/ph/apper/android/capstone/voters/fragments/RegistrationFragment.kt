@@ -1,4 +1,4 @@
-package ph.apper.android.capstone.voters
+package ph.apper.android.capstone.voters.fragments
 
 import android.content.Context
 import android.content.Intent
@@ -14,6 +14,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_registration.*
+import ph.apper.android.capstone.voters.FindMyPrecinctActivity
+import ph.apper.android.capstone.voters.HomeActivity
+import ph.apper.android.capstone.voters.R
 import ph.apper.android.capstone.voters.api.VoterAPIClient
 import ph.apper.android.capstone.voters.model.*
 import retrofit2.Call
@@ -39,25 +42,24 @@ class RegistrationFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val sharedPreference = requireActivity().getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-        val id = sharedPreference.getString("user_id", "")
-        val first_name = sharedPreference.getString("first_name", "")
-        val middle_name = sharedPreference.getString("middle_name", "")
-        val last_name = sharedPreference.getString("last_name", "")
 
-        Log.d("Shared preferences", "${last_name?.toUpperCase()}, ${first_name?.toUpperCase()} (${middle_name?.toUpperCase()})")
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init(view)
+        val sharedPreference = requireActivity().getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        id = sharedPreference.getString("user_id", "").toString()
+        firstName = sharedPreference.getString("first_name", "").toString()
+        middleName = sharedPreference.getString("middle_name", "").toString()
+        lastName = sharedPreference.getString("last_name", "").toString()
+        tv_name?.text = "${lastName.toUpperCase()}, ${firstName.toUpperCase()} (${middleName.toUpperCase()})"
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun init(view: View) {
-        login("ian@test.com", "testing123")
-
         val datePicker = view.findViewById<DatePicker>(R.id.date_picker_birthday)
 
         var civilStatusArray = arrayOf(
@@ -127,6 +129,8 @@ class RegistrationFragment: Fragment() {
             val province = et_province.text.toString()
             val yearsInCity = et_years_in_city.text.toString()
             val yearsInPH = et_years_in_philippines.text.toString()
+            val dateNow = LocalDate.now()
+            val dateRegistered: String = dateNow.format(dateTimeFormatter)
 
             var params = mapOf<String, String>(
                     "id" to id,
@@ -154,49 +158,21 @@ class RegistrationFragment: Fragment() {
                 Log.d("Params", "$params")
                 Log.d("Name", "${params["lastName"]}, ${params["lastName"]} (${params["lastName"]})")
 
-            } else register(id, firstName, middleName, lastName, birthDate, birthProvince, birthCity, civilStatus, sex, street, subdivision, barangay, city, province, yearsInCity, yearsInPH)
+            } else register(id, firstName, middleName, lastName, birthDate, birthProvince, birthCity, civilStatus, sex, street, subdivision, barangay, city, province, yearsInCity, yearsInPH, dateRegistered)
         }
 
         view.findViewById<TextView>(R.id.tv_back).setOnClickListener {
-            var nextActivityIntent: Intent = Intent(requireContext(), FindMyPrecinctActivity::class.java)
+            var nextActivityIntent: Intent = Intent(requireContext(), HomeActivity::class.java)
             // finish()
             startActivity(nextActivityIntent)
         }
     }
 
-    private fun login(email: String, password: String) {
-        var request = LoginRequest(email, password)
-        val call: Call<LoginResponse> =
-                VoterAPIClient.post.login(request)
-
-        call.enqueue(object : Callback<LoginResponse> {
-            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                Snackbar.make(view!!, "Failed api call. $t", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show()
-            }
-
-            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-                val statusCode = response.code()
-                if(statusCode == 200) {
-                    var response: LoginResponse = response!!.body()!!
-                    id = response.profile.id
-                    firstName = response.profile.firstName
-                    middleName = response.profile.middleName
-                    lastName = response.profile.lastName
-                    tv_name.text = "${lastName.toUpperCase()}, ${firstName.toUpperCase()} (${middleName.toUpperCase()})"
-                }
-                else
-                    Snackbar.make(view!!, "Error $statusCode: ${response.message()}", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show()
-            }
-        })
-    }
-
     private fun register(id: String, firstName: String, middleName: String, lastName: String, birthDate: String, birthProvince: String,
                          birthCity: String, civilStatus: String, sex: String, street: String, subdivision: String, barangay: String,
-                         city: String, province: String, yearsInCity: String, yearsInPH: String) {
+                         city: String, province: String, yearsInCity: String, yearsInPH: String, dateRegistered:String) {
         var request = RegisterRequest(id, firstName, middleName, lastName, birthDate, birthProvince, birthCity, civilStatus, sex,
-            street, subdivision, barangay, city, province, yearsInCity, yearsInPH)
+            street, subdivision, barangay, city, province, yearsInCity, yearsInPH, dateRegistered)
         val call: Call<VoterRegistrationResponse> = VoterAPIClient.post.register(request)
 
         call.enqueue(object : Callback<VoterRegistrationResponse> {
