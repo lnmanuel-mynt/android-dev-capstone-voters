@@ -10,17 +10,24 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import kotlinx.android.synthetic.main.fragment_search_result_dialog.view.*
 
-
 class SearchResultDialogFragment: DialogFragment() {
 
     companion object {
         const val TAG = "SearchResultDialog"
 
-        private const val RESULT = "RESULT"
+        private const val PRECINCT_NUMBER = "PRECINCT NUMBER"
+        private const val BARANGAY = "BARANGAY"
+        private const val CITY = "CITY"
+        private const val PROVINCE = "PROVINCE"
+        private const val POLLING_PLACE = "POLLING PLACE"
 
-        fun newInstance(result: String): SearchResultDialogFragment {
+        fun newInstance(precinctNumber: String, barangay: String, city: String, province: String, pollingPlace: String): SearchResultDialogFragment {
             val args = Bundle()
-            args.putString(RESULT, result)
+            args.putString(PRECINCT_NUMBER, precinctNumber)
+            args.putString(BARANGAY, barangay)
+            args.putString(CITY, city)
+            args.putString(PROVINCE, province)
+            args.putString(POLLING_PLACE, pollingPlace)
             val fragment = SearchResultDialogFragment()
             fragment.arguments = args
             return fragment
@@ -36,6 +43,7 @@ class SearchResultDialogFragment: DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupView(view)
 
         view.findViewById<TextView>(R.id.tv_close).setOnClickListener {
             dismiss()
@@ -48,7 +56,11 @@ class SearchResultDialogFragment: DialogFragment() {
     }
 
     private fun setupView(view: View) {
-        view.tv_result.text = arguments?.getString(RESULT)
+        view.tv_precinct_number.text = arguments?.getString(PRECINCT_NUMBER)
+        view.tv_barangay.text = arguments?.getString(BARANGAY)
+        view.tv_city.text = arguments?.getString(CITY)
+        view.tv_province.text = arguments?.getString(PROVINCE)
+        view.tv_polling_place.text = arguments?.getString(POLLING_PLACE)
     }
 
     private fun setDialogSize(widthPercentage: Int, heightPercentage: Int) {
