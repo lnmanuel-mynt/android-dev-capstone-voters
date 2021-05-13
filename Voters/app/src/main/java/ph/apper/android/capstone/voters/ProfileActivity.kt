@@ -5,14 +5,17 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import kotlinx.android.synthetic.main.activity_find_my_precinct.*
 import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.android.synthetic.main.activity_profile.tv_back
 import ph.apper.android.capstone.voters.api.APIClient
 import ph.apper.android.capstone.voters.model.GetUserResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileActivity : AppCompatActivity(), View.OnClickListener {
 
     // Shared Preferences parameters
     private val USER_ID = "user_id"
@@ -20,6 +23,8 @@ class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
+
+        tv_back.setOnClickListener(this)
 
         // Get User ID
         val sharedPref = this.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
@@ -69,5 +74,15 @@ class ProfileActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    override fun onClick(v: View?) {
+        when(v!!.id) {
+            tv_back.id -> {
+                var nextActivityIntent: Intent = Intent(applicationContext, HomeActivity::class.java)
+                finish()
+                startActivity(nextActivityIntent)
+            }
+        }
     }
 }
