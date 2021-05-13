@@ -1,5 +1,6 @@
 package ph.apper.android.capstone.voters.fragments
 
+import android.app.Dialog
 import android.content.res.Resources
 import android.graphics.Rect
 import android.os.Bundle
@@ -8,10 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import kotlinx.android.synthetic.main.fragment_search_result_dialog.*
 import kotlinx.android.synthetic.main.fragment_search_result_dialog.view.*
 import ph.apper.android.capstone.voters.R
 
-class SearchResultDialogFragment: DialogFragment() {
+class SearchResultDialogFragment: DialogFragment(), OnMapReadyCallback {
+
+    lateinit var googleMap: GoogleMap
 
     companion object {
         const val TAG = "SearchResultDialog"
@@ -32,6 +39,21 @@ class SearchResultDialogFragment: DialogFragment() {
             val fragment = SearchResultDialogFragment()
             fragment.arguments = args
             return fragment
+        }
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return super.onCreateDialog(savedInstanceState)
+
+        mv_google_map.onCreate(savedInstanceState)
+        mv_google_map.onResume()
+
+        mv_google_map.getMapAsync(this)
+    }
+
+    override fun onMapReady(map: GoogleMap?) {
+        map?.let{
+            googleMap = it
         }
     }
 
