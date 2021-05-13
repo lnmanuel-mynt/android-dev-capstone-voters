@@ -35,6 +35,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         bt_profile.setOnClickListener(this)
         bt_find.setOnClickListener(this)
         bt_registration.setOnClickListener(this)
+        bt_candidates.setOnClickListener(this)
 
         val sharedPref = this.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
         val email = sharedPref.getString(EMAIL_KEY, "email")
@@ -60,6 +61,10 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             bt_registration.id -> {
                 // Get User Data
                 getData(id)
+            }
+            bt_candidates.id -> {
+                val nextActivityIntent = Intent(applicationContext, CandidateActivity::class.java)
+                startActivity(nextActivityIntent)
             }
         }
     }

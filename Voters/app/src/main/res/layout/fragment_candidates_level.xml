@@ -6,11 +6,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.CandidatesLevelFragment">
 
+    <ImageView
+        android:id="@+id/kyc_icon"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/kyc_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_kyc"/>
+    <TextView
+        android:id="@+id/kyc_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:text="KNOW YOUR CANDIDATES"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/kyc_icon"/>
     <LinearLayout
+        android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/kyc_icon"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <Button

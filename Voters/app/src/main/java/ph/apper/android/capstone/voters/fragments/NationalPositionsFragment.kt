@@ -11,8 +11,14 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_national_positions.*
 import kotlinx.android.synthetic.main.fragment_national_positions.view.*
+import ph.apper.android.capstone.voters.CandidateActivity
 import ph.apper.android.capstone.voters.R
 import ph.apper.android.capstone.voters.adapters.CandidatePositionsAdapter
+import ph.apper.android.capstone.voters.api.CandidateAPIClient
+import ph.apper.android.capstone.voters.model.GetCandidateListResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class NationalPositionsFragment : Fragment(), View.OnClickListener, CandidatePositionsAdapter.OnItemClickListener{
     lateinit var navController: NavController
@@ -60,7 +66,34 @@ class NationalPositionsFragment : Fragment(), View.OnClickListener, CandidatePos
     }
 
     override fun onItemClick(position: Int) {
-        Log.d("POSITION", "${nationalPositionsArray[position]}")
+        getNationalCandidatesList(nationalPositionsArray[position])
+    }
+
+    private fun getNationalCandidatesList(position:String){
+        val call: Call<GetCandidateListResponse> = CandidateAPIClient.get.getNationalCandidates(position)
+        call.enqueue(object : Callback<GetCandidateListResponse> {
+
+            override fun onFailure(call: Call<GetCandidateListResponse>, t: Throwable) {
+                Log.d("GET REQUEST: ", "FAILED + ${t.message}")
+
+            }
+
+            override fun onResponse(
+                call: Call<GetCandidateListResponse>,
+                response: Response<GetCandidateListResponse>
+            ) {
+                if(response.code() == 404){
+//                    Toast.makeText(this, "NO CANDIDATES FOUND",Toast.LENGTH_LONG).show()
+                    Log.d("GET REQUEST: ", "NO DATA")
+                    return
+                }
+                CandidateActivity.candidatePosition = position
+                CandidateActivity.populateList(response.body()?.candidateList)
+                navController.navigate(R.id.action_nationalPositionsFragment_to_candidatesFragment)
+
+            }
+
+        })
     }
 
 }
