@@ -2,18 +2,22 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="10dp">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_candidate"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+       >
         <ImageView
             android:id="@+id/img_candidate"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:src="@drawable/ic_user"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_candidate_name"/>
         <TextView
+            android:id="@+id/tv_candidate_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="CANDIDATE NAME"
