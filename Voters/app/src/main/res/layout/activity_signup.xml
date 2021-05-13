@@ -11,6 +11,7 @@
         android:id="@+id/tv_signup"
         android:text="SIGN UP"
         android:textSize="24sp"
+        android:fontFamily="@font/poppins_semibold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -19,6 +20,7 @@
     <EditText
         android:id="@+id/et_signup_firstname"
         android:hint="First Name"
+        android:fontFamily="@font/poppins"
         android:inputType="textPersonName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,6 +30,7 @@
     <EditText
         android:id="@+id/et_signup_middlename"
         android:hint="Middle Name"
+        android:fontFamily="@font/poppins"
         android:inputType="textPersonName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,6 +40,7 @@
     <EditText
         android:id="@+id/et_signup_surname"
         android:hint="Surname"
+        android:fontFamily="@font/poppins"
         android:inputType="textPersonName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,6 +50,7 @@
     <EditText
         android:id="@+id/et_signup_email"
         android:hint="E-mail"
+        android:fontFamily="@font/poppins"
         android:inputType="textEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,6 +60,7 @@
     <EditText
         android:id="@+id/et_signup_password"
         android:hint="Password (must be at least 8 characters)"
+        android:fontFamily="@font/poppins"
         android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,6 +70,7 @@
     <EditText
         android:id="@+id/et_signup_confirm"
         android:hint="Confirm Password"
+        android:fontFamily="@font/poppins"
         android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -76,6 +83,7 @@
         android:text="Sign Up"
         android:textAllCaps="false"
         android:textSize="24sp"
+        android:fontFamily="@font/poppins"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"/>

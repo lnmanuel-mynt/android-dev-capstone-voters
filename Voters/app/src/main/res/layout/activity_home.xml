@@ -39,7 +39,7 @@
         android:id="@+id/tv_home"
         android:text="HOME"
         android:textSize="24sp"
-        android:fontFamily="@font/poppins"
+        android:fontFamily="@font/poppins_semibold"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
