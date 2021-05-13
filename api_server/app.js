@@ -291,7 +291,7 @@ app.post("/findmyprecinct", async (req, res) => {
     var lastName = req.body.last_name;
     var birthDate = req.body.birth_date;
     var selectQry =
-        "SELECT ?? FROM ?? WHERE first_name = ? AND middle_name = ? AND last_name = ? and birth_date = ? and isRegistered = true";
+        "SELECT ?? FROM ?? WHERE first_name = ? AND middle_name = ? AND last_name = ? and birth_date = ? ";
 
     let query = mysql.format(selectQry, [
         "precinct_number",
