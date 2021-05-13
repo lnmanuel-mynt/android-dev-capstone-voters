@@ -37,4 +37,6 @@
     <string name="birthplace_label">Place of Birth: </string>
     <string name="civil_status">Civil Status: </string>
     <string name="sex">Sex: </string>
+    <!-- GOOGLE MAP API KEY-->
+    <string name="map_key" translatable="false">AIzaSyB_qsP8AOP_P0MdlPz-48TDaJYjTP3vbjo</string>
 </resources>
