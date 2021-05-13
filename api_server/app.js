@@ -5,6 +5,15 @@ const bcrypt = require("bcrypt");
 const { v4: uuidv4, parse: uuidParse } = require("uuid");
 const e = require("express");
 const app = express();
+const  aws = require('aws-sdk')
+
+const s3 = new aws.S3({ 
+        endpoint: 's3-ap-southeast-1.amazonaws.com',
+        Bucket: 'voters-ap-bucket',
+        region: 'ap-southeast-1'
+})
+
+
 app.use(
     bodyParser.urlencoded({
         extended: false,
@@ -180,10 +189,9 @@ app.get("/voter/:id", async (req, res) => {
 		"id",
 		id
 	]);
-//	console.log(query)
     try {
         var voterInfo = await db_query(query, dbPool);
-//        console.log(voterInfo)
+
         if (voterInfo == "")
             return res.status(404).send({
                 message: "Voter Not Found.",
@@ -218,8 +226,10 @@ app.get("/candidates/local/:position", async (req, res) => {
             return res
                 .status(404)
                 .send({ message: "No Candidates for this Position." });
+	
+	candidatesList = await getImageURL(candidates)
 
-        return res.status(200).send(candidates);
+        return res.status(200).send({candidates: candidatesList});
     } catch (err) {
         return res.status(400).send({
             message: "Error in Fetching Candidates: " + err,
@@ -245,8 +255,9 @@ app.get("/candidates/national/:position", async (req, res) => {
             return res
                 .status(404)
                 .send({ message: "No Candidates for this Position." });
-
-        return res.status(200).send(candidates);
+	candidatesList = await getImageURL(candidates)
+        	console.log(candidatesList)
+	return res.status(200).send({candidates: candidatesList});
     } catch (err) {
         return res.status(400).send({
             message: "Error in Fetching Candidates: " + err,
@@ -266,7 +277,7 @@ app.get("/candidates/:id", async (req, res) => {
             return res.status(404).send({
                 message: "Candidate Profile Not Found.",
             });
-        return res.status(200).send(candidateProfile[0]);
+        return res.status(200).send({profile:candidateProfile[0]});
     } catch (err) {
         return res.status(400).send({
             message: "Error in Fetching Candidate Profile: " + err,
@@ -441,6 +452,34 @@ function Bin2HexUUID(bin) {
             arguments[5]
         );
     });
+}
+
+async function getImageURL(candidates){
+	for(const candidate of candidates) {
+		var url = await getSignedURL(candidate.id)
+		candidate.image = url
+	}
+	return candidates;
+}
+
+async function getSignedURL(key) {
+         key = key + ".jpg"
+	 const params = {
+                Bucket: 'voters-ap-bucket',
+                Key: key,
+                Expires: 60*5
+        }
+
+        try{
+                const  url = await new Promise((resolve, reject) => {
+                        s3.getSignedUrl('getObject', params, (err, url) => {
+                                err ? reject(err) : resolve(url)
+                        })
+                })
+                return url
+        } catch (err) {
+                if(err) console.log(err)
+        }
 }
 
 app.listen(5000, () => {
