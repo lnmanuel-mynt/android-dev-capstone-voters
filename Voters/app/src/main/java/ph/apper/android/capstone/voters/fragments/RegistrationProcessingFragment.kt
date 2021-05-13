@@ -2,6 +2,8 @@ package ph.apper.android.capstone.voters.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,8 +26,9 @@ class RegistrationProcessingFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         view.findViewById<TextView>(R.id.tv_close).setOnClickListener {
-            var nextActivityIntent: Intent = Intent(requireContext(), HomeActivity::class.java)
-            // finish()
+            val nextActivityIntent = Intent(requireContext(), HomeActivity::class.java)
+            nextActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            activity?.finish()
             startActivity(nextActivityIntent)
         }
     }

@@ -71,7 +71,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             ) {
                 if (response.code() == 404) {
                     val nextActivityIntent = Intent(applicationContext, RegistrationActivity::class.java)
-                    //finish()
+                    // finish()
                     startActivity(nextActivityIntent)
                 } else {
                     Toast.makeText(applicationContext, "User already registered!", Toast.LENGTH_LONG).show()
