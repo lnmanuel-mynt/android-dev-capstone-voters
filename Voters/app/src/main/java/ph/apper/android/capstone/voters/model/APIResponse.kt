@@ -89,3 +89,30 @@ class GetUserResponse {
     var province = ""
 
 }
+
+class CandidateInfo{
+    @SerializedName("id")
+    var id = ""
+    @SerializedName("name")
+    var name = ""
+    @SerializedName("position")
+    var position = ""
+    @SerializedName("party")
+    var party = ""
+    @SerializedName("is_national")
+    var is_national = ""
+    @SerializedName("province")
+    var province = ""
+    @SerializedName("municipality")
+    var municipality = ""
+    @SerializedName("district")
+    var district = ""
+    @SerializedName("image")
+    var image = ""
+
+}
+
+class GetCandidateListResponse{
+    @SerializedName("candidates")
+    var candidateList:ArrayList<CandidateInfo> = ArrayList<CandidateInfo>()
+}
