@@ -2,14 +2,18 @@ package ph.apper.android.capstone.voters
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.view.Window
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.activity_profile.*
 import ph.apper.android.capstone.voters.api.APIClient
 import ph.apper.android.capstone.voters.model.GetUserResponse
 import retrofit2.Call
@@ -52,7 +56,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             }
             bt_find.id -> {
                 val nextActivityIntent = Intent(applicationContext, FindMyPrecinctActivity::class.java)
-                //finish()
+                finish()
                 startActivity(nextActivityIntent)
             }
             bt_registration.id -> {
@@ -60,6 +64,37 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 getData(id)
             }
         }
+    }
+
+    override fun onBackPressed() {
+
+        val dialogBuilder = AlertDialog.Builder(this)
+        dialogBuilder.setMessage("Are you sure you want to log out?")
+        dialogBuilder.setCancelable(false)
+        dialogBuilder.setPositiveButton("OK") { _, _ ->
+            run {
+                val nextActivityIntent = Intent(applicationContext, LoginActivity::class.java)
+                finish()
+                startActivity(nextActivityIntent)
+            }
+        }
+        dialogBuilder.setNegativeButton("CANCEL") { dialog, _ ->
+            dialog.cancel()
+        }
+
+        val logoutDialog = dialogBuilder.create()
+        logoutDialog.show()
+
+        val view: Window? = logoutDialog.window
+        val message: TextView = view!!.findViewById(android.R.id.message)
+        val btn1: Button = view!!.findViewById(android.R.id.button1)
+        val btn2: Button = view!!.findViewById(android.R.id.button2)
+
+        val poppins = Typeface.createFromAsset(assets,"poppins.otf")
+
+        message.typeface = poppins
+        btn1.typeface = poppins
+        btn2.typeface = poppins
     }
 
     private fun getData(id: String) {

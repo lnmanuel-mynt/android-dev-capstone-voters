@@ -25,6 +25,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private val MIDDLE_NAME = "middle_name"
     private val LAST_NAME = "last_name"
 
+    private lateinit var backToast: Toast
+    private var backPressedTime: Long = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -52,6 +55,18 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(nextActivityIntent)
             }
         }
+    }
+
+    override fun onBackPressed() {
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            backToast.cancel()
+            super.onBackPressed()
+            return
+        } else {
+            backToast = Toast.makeText(baseContext, "Press back again to exit", Toast.LENGTH_SHORT)
+            backToast.show()
+        }
+        backPressedTime = System.currentTimeMillis()
     }
 
     private fun login(email: String, password: String) {
