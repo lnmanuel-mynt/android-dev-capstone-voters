@@ -45,10 +45,7 @@ class SearchResultDialogFragment: DialogFragment(), OnMapReadyCallback {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return super.onCreateDialog(savedInstanceState)
 
-        mv_google_map.onCreate(savedInstanceState)
-        mv_google_map.onResume()
 
-        mv_google_map.getMapAsync(this)
     }
 
     override fun onMapReady(map: GoogleMap?) {
@@ -67,6 +64,11 @@ class SearchResultDialogFragment: DialogFragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupView(view)
+
+        mv_google_map.onCreate(savedInstanceState)
+        mv_google_map.onResume()
+
+        mv_google_map.getMapAsync(this)
 
         view.findViewById<TextView>(R.id.tv_close).setOnClickListener {
             dismiss()
