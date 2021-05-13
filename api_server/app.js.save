@@ -88,6 +88,7 @@ app.post("/voter/register", async (req, res) => {
     var firstName = req.body.first_name;
     var middleName = req.body.middle_name;
     var lastName = req.body.last_name;
+    var email = req.body.email;
     var birthDate = req.body.birth_date;
     var birthProvince = req.body.birth_province;
     var birthCity = req.body.birth_city;
@@ -100,12 +101,11 @@ app.post("/voter/register", async (req, res) => {
     var province = req.body.province;
     var yearsInCity = req.body.years_in_city;
     var yearsInPH = req.body.years_in_ph;
-    var dateRegistered = req.body.date_registered;
-    var id = req.body.id;
+    var appUserId = req.body.app_user_id;
 
-    var rows = await getUserById(id, "voters");
+    var rows = await getUserById(appUserId, "voters");
     if (rows != "")
-        return res.status(400).send({
+        return res.status(200).send({
             message: "Voter already signed up.",
         });
 
@@ -114,10 +114,11 @@ app.post("/voter/register", async (req, res) => {
     let query = mysql.format(insertQry, [
         "voters",
         [
-            "id",
+            "app_user_id",
             "first_name",
             "middle_name",
             "last_name",
+            "email",
             "birth_date",
             "birth_province",
             "birth_city",
@@ -130,16 +131,17 @@ app.post("/voter/register", async (req, res) => {
             "province",
             "years_in_city",
             "years_in_ph",
+            "isRegistered",
             "voter_id_number",
             "precinct_number",
-	    "date_registered",
             "registration_status",
         ],
-        id,
+        appUserId,
         [
             firstName,
             middleName,
             lastName,
+            email,
             birthDate,
             birthProvince,
             birthCity,
@@ -152,9 +154,9 @@ app.post("/voter/register", async (req, res) => {
             province,
             yearsInCity,
             yearsInPH,
+            false,
             null,
             null,
-	    dateRegistered,
             "PENDING",
         ],
     ]);
@@ -172,25 +174,18 @@ app.post("/voter/register", async (req, res) => {
 });
 
 app.get("/voter/:id", async (req, res) => {
-    var id = req.params.id;
+    var voterId = req.params.id;
     
-    var selectQry = "SELECT * FROM ?? where BIN_TO_UUID(??) = ?";
-    let query = mysql.format(selectQry, [
-		"voters",
-		"id",
-		id
-	]);
-//	console.log(query)
+    var selectQry = 
     try {
-        var voterInfo = await db_query(query, dbPool);
-//        console.log(voterInfo)
+        var voterInfo = await getUserById(voterId, "voters");
         if (voterInfo == "")
             return res.status(404).send({
                 message: "Voter Not Found.",
             });
-
+2
         voterInfo = voterInfo.map((v) => Object.assign({}, v));
-        voterInfo[0].id = Bin2HexUUID(voterInfo[0].id);
+        voterInfo[0].app_user_id = Bin2HexUUID(voterInfo[0].app_user_id);
         return res.status(200).send(voterInfo[0]);
     } catch (err) {
         console.log("Caught Error in Fetching Voter Info " + err);
@@ -406,7 +401,7 @@ async function getUserByEmail(email, table) {
 async function getUserById(id, table) {
     var selectQry = "SELECT * FROM ?? WHERE BIN_TO_UUID(??) = ?";
 
-    let query = mysql.format(selectQry, [table, "id", id]);
+    let query = mysql.format(selectQry, [table, "app_user_id", id]);
     try {
         var results = await db_query(query, dbPool);
         return results;
