@@ -1,6 +1,7 @@
 package ph.apper.android.capstone.voters
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -29,7 +30,12 @@ class ProfileActivity : AppCompatActivity() {
         if (id != null) {
             getData(id)
         }
+    }
 
+    override fun onBackPressed() {
+        var nextActivityIntent: Intent = Intent(applicationContext, HomeActivity::class.java)
+        finish()
+        startActivity(nextActivityIntent)
     }
 
     private fun getData(id: String) {
