@@ -42,9 +42,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         id = sharedPref.getString(USER_ID, "ID").toString()
         Log.d("SHARED USER ID", "User ID: $id")
         Log.d("SHARED EMAIL", "Email: ${email}")
-        val toast = Toast.makeText(applicationContext, "Welcome, ${firstName}!", Toast.LENGTH_LONG)
-        toast.setGravity(Gravity.BOTTOM, 0,32)
-        toast.show()
+        "Hello, $firstName!".also { tv_hello.text = it }
     }
 
     override fun onClick(v: View?) {

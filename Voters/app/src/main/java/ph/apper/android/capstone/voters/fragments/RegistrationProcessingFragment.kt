@@ -25,6 +25,13 @@ class RegistrationProcessingFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Handler(Looper.getMainLooper()).postDelayed({
+            val nextActivityIntent = Intent(requireContext(), HomeActivity::class.java)
+            nextActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            activity?.finish()
+            startActivity(nextActivityIntent)
+        },3000)
+
         view.findViewById<TextView>(R.id.tv_close).setOnClickListener {
             val nextActivityIntent = Intent(requireContext(), HomeActivity::class.java)
             nextActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
