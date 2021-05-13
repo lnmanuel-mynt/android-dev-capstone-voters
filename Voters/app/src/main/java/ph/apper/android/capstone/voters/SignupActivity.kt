@@ -54,6 +54,12 @@ class SignupActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    override fun onBackPressed() {
+        var nextActivityIntent: Intent = Intent(applicationContext, LoginActivity::class.java)
+        finish()
+        startActivity(nextActivityIntent)
+    }
+
     private fun signup(firstName: String, middleName: String, lastName: String, email: String, password: String) {
         val request = SignupRequest(firstName, middleName, lastName, email, password)
         val call: Call<SignupResponse> = APIClient.sendPost.signup(request)

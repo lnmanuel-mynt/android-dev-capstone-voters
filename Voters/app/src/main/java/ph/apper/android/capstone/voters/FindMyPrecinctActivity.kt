@@ -3,6 +3,7 @@ package ph.apper.android.capstone.voters
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.DatePicker
 import android.widget.Toast
@@ -43,9 +44,10 @@ class FindMyPrecinctActivity : AppCompatActivity(), View.OnClickListener {
                 val middleName = et_middle_name.text.toString()
                 val lastName = et_last_name.text.toString()
                 val datePicker = findViewById<DatePicker>(R.id.date_picker_birthday)
-                val dateTimeFormatter = DateTimeFormatter.ofPattern("MM-dd-yyyy")
+                val dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
                 val date = LocalDate.of(datePicker.year, datePicker.month + 1, datePicker.dayOfMonth)
                 val birthDate: String = date.format(dateTimeFormatter)
+                Log.d("Birthdate", "$birthDate")
                 findMyPrecinct(firstName, middleName, lastName, birthDate)
             }
             tv_back.id -> {
@@ -54,6 +56,12 @@ class FindMyPrecinctActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(nextActivityIntent)
             }
         }
+    }
+
+    override fun onBackPressed() {
+        var nextActivityIntent: Intent = Intent(applicationContext, HomeActivity::class.java)
+        finish()
+        startActivity(nextActivityIntent)
     }
 
     private fun findMyPrecinct(firstName: String, middleName: String, lastName: String, birthDate: String) {
@@ -72,8 +80,9 @@ class FindMyPrecinctActivity : AppCompatActivity(), View.OnClickListener {
                     pollingPlace = response.precinctInfo.pollingPlace
                     showSearchResult(precinctNumber, barangay, city, province, pollingPlace)
                 } else {
-                    // todo no record available
+                    Log.d("Response", "$response")
                     Toast.makeText(applicationContext, "Error $statusCode: ${response.message()}", Toast.LENGTH_SHORT).show()
+
                 }
             }
 
