@@ -50,7 +50,7 @@ class FindMyPrecinctActivity : AppCompatActivity(), View.OnClickListener {
             }
             tv_back.id -> {
                 var nextActivityIntent: Intent = Intent(applicationContext, HomeActivity::class.java)
-                // finish()
+                finish()
                 startActivity(nextActivityIntent)
             }
         }
