@@ -45,7 +45,7 @@
     <string name="sex">Sex:</string>
     <string name="terms">I agree to Terms of Use</string>
     <string name="review">Please review to ensure that the details are correct before you proceed.</string>
-    <string name="processing">Your application is being processed...</string>
+    <string name="processing">Your application is being processed…</string>
 
     <!-- GOOGLE MAP API KEY-->
     <string name="map_key" translatable="false">AIzaSyB_qsP8AOP_P0MdlPz-48TDaJYjTP3vbjo</string>
@@ -55,7 +55,7 @@
     <string name="candidates">Candidates</string>
     <string name="registration">Registration</string>
     <string name="find_my_precint">Find My Precint</string>
-    <string name="application_status">Application Status:</string>
+    <string name="registration_status">Registration Status:</string>
     <string name="voters_id_no">Voter\'s ID No:</string>
     <string name="profile_province">Province:</string>
     <string name="profile_city">City/Municipality:</string>
