@@ -3,7 +3,6 @@ package ph.apper.android.capstone.voters
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.DatePicker
 import android.widget.Toast
@@ -19,14 +18,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 class FindMyPrecinctActivity : AppCompatActivity(), View.OnClickListener {
-
-    var precinctNumber = ""
-    var barangay = ""
-    var city = ""
-    var province = ""
-    var pollingPlace = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,18 +34,24 @@ class FindMyPrecinctActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v!!.id) {
             btn_search.id -> {
-                val firstName = et_first_name.text.toString()
-                val middleName = et_middle_name.text.toString()
-                val lastName = et_last_name.text.toString()
-                val datePicker = findViewById<DatePicker>(R.id.date_picker_birthday)
-                val dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                val date = LocalDate.of(datePicker.year, datePicker.month + 1, datePicker.dayOfMonth)
-                val birthDate: String = date.format(dateTimeFormatter)
-                Log.d("Birthdate", "$birthDate")
-                findMyPrecinct(firstName, middleName, lastName, birthDate)
+                if (et_first_name.text.isBlank() or et_middle_name.text.isBlank() or et_last_name.text.isBlank())
+                    Toast.makeText(applicationContext, "All fields are required", Toast.LENGTH_SHORT).show()
+                else {
+                    val datePicker = findViewById<DatePicker>(R.id.date_picker_birthday)
+                    val dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                    val birthDate =
+                        LocalDate.of(datePicker.year, datePicker.month + 1, datePicker.dayOfMonth)
+                    val searchParams = mapOf(
+                        "firstName" to et_first_name.text.toString().toLowerCase(Locale.ROOT),
+                        "middleName" to et_middle_name.text.toString().toLowerCase(Locale.ROOT),
+                        "lastName" to et_last_name.text.toString().toLowerCase(Locale.ROOT),
+                        "birthDate" to birthDate.format(dateTimeFormatter)
+                    )
+                    findMyPrecinct(searchParams)
+                }
             }
             tv_back.id -> {
-                var nextActivityIntent: Intent = Intent(applicationContext, HomeActivity::class.java)
+                val nextActivityIntent = Intent(applicationContext, HomeActivity::class.java)
                 finish()
                 startActivity(nextActivityIntent)
             }
@@ -59,30 +59,36 @@ class FindMyPrecinctActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onBackPressed() {
-        var nextActivityIntent: Intent = Intent(applicationContext, HomeActivity::class.java)
+        val nextActivityIntent = Intent(applicationContext, HomeActivity::class.java)
         finish()
         startActivity(nextActivityIntent)
     }
 
-    private fun findMyPrecinct(firstName: String, middleName: String, lastName: String, birthDate: String) {
-        var request = FindMyPrecinctRequest(firstName, middleName, lastName, birthDate)
+    private fun findMyPrecinct(searchParams: Map<String, String>) {
+        val request = FindMyPrecinctRequest(
+            searchParams["firstName"].toString(),
+            searchParams["middleName"].toString(),
+            searchParams["lastName"].toString(),
+            searchParams["birthDate"].toString()
+        )
         val call: Call<FindMyPrecinctResponse> = VoterAPIClient.post.findMyPrecinct(request)
 
         call.enqueue(object : Callback<FindMyPrecinctResponse> {
             override fun onResponse(call: Call<FindMyPrecinctResponse>, response: Response<FindMyPrecinctResponse>) {
-                val statusCode = response.code()
-                if (statusCode == 200) {
-                    var response: FindMyPrecinctResponse = response!!.body()!!
-                    precinctNumber = response.precinctInfo.precinctNumber
-                    barangay = response.precinctInfo.barangay
-                    city = response.precinctInfo.city
-                    province = response.precinctInfo.province
-                    pollingPlace = response.precinctInfo.pollingPlace
-                    showSearchResult(precinctNumber, barangay, city, province, pollingPlace)
-                } else {
-                    Log.d("Response", "$response")
-                    Toast.makeText(applicationContext, "Error $statusCode: ${response.message()}", Toast.LENGTH_SHORT).show()
-
+                when (val statusCode = response.code()) {
+                    200 -> {
+                        val response: FindMyPrecinctResponse = response!!.body()!!
+                        val dialogParams = mapOf(
+                            "precinctNumber" to response.precinctInfo.precinctNumber,
+                            "barangay" to response.precinctInfo.barangay,
+                            "city" to response.precinctInfo.city,
+                            "province" to response.precinctInfo.province,
+                            "pollingPlace" to response.precinctInfo.pollingPlace,
+                        )
+                        showSearchResult(dialogParams)
+                    }
+                    404 -> Toast.makeText(applicationContext, "No record found", Toast.LENGTH_LONG).show()
+                    else -> Toast.makeText(applicationContext, "Error: $statusCode: ${response.message()}", Toast.LENGTH_LONG).show()
                 }
             }
 
@@ -92,7 +98,7 @@ class FindMyPrecinctActivity : AppCompatActivity(), View.OnClickListener {
         })
     }
 
-    private fun showSearchResult(precinctNumber: String, barangay: String, city: String, province: String, pollingPlace: String) {
-        SearchResultDialogFragment.newInstance(precinctNumber, barangay, city, province, pollingPlace).show(supportFragmentManager, SearchResultDialogFragment.TAG)
+    private fun showSearchResult(dialogParams: Map<String, String>) {
+        SearchResultDialogFragment.newInstance(dialogParams).show(supportFragmentManager, SearchResultDialogFragment.TAG)
     }
 }
