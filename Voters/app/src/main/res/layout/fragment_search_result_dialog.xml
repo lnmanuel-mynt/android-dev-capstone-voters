@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="4"
-        android:background="@color/dark_cyan_500"
+        android:background="?attr/colorPrimaryVariant"
         android:paddingHorizontal="10dp"
         android:paddingVertical="5dp" >
 
