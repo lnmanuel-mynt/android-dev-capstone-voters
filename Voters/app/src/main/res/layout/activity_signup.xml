@@ -82,6 +82,7 @@
         android:id="@+id/bt_signup_signup"
         android:backgroundTint="#60000000"
         android:text="@string/sign_up_2"
+        android:textColor="@color/white"
         android:textAllCaps="false"
         android:textSize="24sp"
         android:fontFamily="@font/poppins"

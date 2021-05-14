@@ -62,7 +62,6 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
                     "Precinct No:  N/A".also { tv_precinct.text = it }
                 } else {
                     val response: GetUserResponse = response.body()!!
-                    Log.d("RESPONSE BODY", response.toString())
                     ("Registration Status:  " + response.status.toUpperCase(Locale.ENGLISH)).also { tv_status.text = it }
                     ("Voter's ID No:  " + response.votersId.toUpperCase(Locale.ENGLISH)).also { tv_voters_id.text = it }
                     ("Province:  " + response.province.toUpperCase(Locale.ENGLISH)).also { tv_province.text = it }
