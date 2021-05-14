@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_find_my_precinct.*
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.activity_profile.tv_back
 import ph.apper.android.capstone.voters.api.APIClient
@@ -19,8 +18,7 @@ import java.util.*
 
 class ProfileActivity : AppCompatActivity(), View.OnClickListener {
 
-    // Shared Preferences parameters
-    private val USER_ID = "user_id"
+    private val userId = "user_id"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,12 +26,9 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
 
         tv_back.setOnClickListener(this)
 
-        // Get User ID
         val sharedPref = this.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-        val id = sharedPref.getString(USER_ID, "ID")
-        Log.d("SHARED USER ID", "User ID: $id")
+        val id = sharedPref.getString(userId, "")
 
-        // Get User Data
         if (id != null) {
             getData(id)
         }
@@ -75,7 +70,6 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
                 t.message?.let { Log.d("GET USER API FAILURE", it) }
                 Toast.makeText(applicationContext, "User not found", Toast.LENGTH_SHORT).show()
             }
-
         })
     }
 

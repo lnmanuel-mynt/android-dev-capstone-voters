@@ -2,7 +2,6 @@ package ph.apper.android.capstone.voters
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -18,12 +17,11 @@ import retrofit2.Response
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
-    // Shared Preferences parameters
-    private val USER_ID = "user_id"
-    private val EMAIL_KEY = "email_key"
-    private val FIRST_NAME = "first_name"
-    private val MIDDLE_NAME = "middle_name"
-    private val LAST_NAME = "last_name"
+    private val userID = "user_id"
+    private val emailKey = "email_key"
+    private val firstName = "first_name"
+    private val middleName = "middle_name"
+    private val lastName = "last_name"
 
     private lateinit var backToast: Toast
     private var backPressedTime: Long = 0
@@ -43,10 +41,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 val email = et_login_email.text.toString()
                 val password = et_login_password.text.toString()
                 if(email.isEmpty() or password.isEmpty()) {
-                    Toast.makeText(applicationContext, "All fields are required!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "All fields are required", Toast.LENGTH_SHORT).show()
                     return
                 }
-                // DB Logic
                 login(email, password)
             }
             bt_login_signup.id -> {
@@ -75,20 +72,19 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         call.enqueue(object: Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.code() == 401) {
-                    Toast.makeText(applicationContext, "Invalid login credentials!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext, "Invalid login credentials", Toast.LENGTH_SHORT).show()
                 } else {
                     val response: LoginResponse = response.body()!!
                     val sharedPref = this@LoginActivity.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
                     with (sharedPref.edit()) {
-                        putString(USER_ID, response.profile.id)
-                        putString(EMAIL_KEY, response.profile.email)
-                        putString(FIRST_NAME, response.profile.firstName)
-                        putString(MIDDLE_NAME, response.profile.middleName)
-                        putString(LAST_NAME, response.profile.lastName)
+                        putString(userID, response.profile.id)
+                        putString(emailKey, response.profile.email)
+                        putString(firstName, response.profile.firstName)
+                        putString(middleName, response.profile.middleName)
+                        putString(lastName, response.profile.lastName)
                         apply()
                         commit()
                     }
-                    // Go to Home Activity
                     val nextActivityIntent = Intent(applicationContext, HomeActivity::class.java)
                     finish()
                     startActivity(nextActivityIntent)
@@ -99,7 +95,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 t.message?.let { Log.d("LOGIN API FAILURE", it) }
                 Toast.makeText(applicationContext, "Failed to connect to server", Toast.LENGTH_SHORT).show()
             }
-
         })
     }
 }

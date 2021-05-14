@@ -8,13 +8,11 @@ import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_signup.*
 import ph.apper.android.capstone.voters.api.APIClient
-import ph.apper.android.capstone.voters.model.LoginResponse
 import ph.apper.android.capstone.voters.model.SignupRequest
 import ph.apper.android.capstone.voters.model.SignupResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.format.SignStyle
 import java.util.*
 
 class SignupActivity : AppCompatActivity(), View.OnClickListener {
@@ -34,23 +32,15 @@ class SignupActivity : AppCompatActivity(), View.OnClickListener {
                 val email = et_signup_email.text.toString()
                 val password = et_signup_password.text.toString()
                 val confirmPassword = et_signup_confirm.text.toString()
-                if (
-                    firstName.isEmpty() or middleName.isEmpty() or
-                    lastName.isEmpty() or email.isEmpty() or password.isEmpty()
-                ) {
-                    Toast.makeText(applicationContext, "All fields are required!", Toast.LENGTH_SHORT).show()
-                    return
+                when {
+                    firstName.isEmpty() or middleName.isEmpty() or lastName.isEmpty() or email.isEmpty() or password.isEmpty() ->
+                        Toast.makeText(applicationContext, "All fields are required", Toast.LENGTH_SHORT).show()
+                    password.length < 8 ->
+                        Toast.makeText(applicationContext, "Insufficient password length", Toast.LENGTH_SHORT).show()
+                    password != confirmPassword ->
+                        Toast.makeText(applicationContext, "Passwords do not match", Toast.LENGTH_SHORT).show()
+                    else -> signup(firstName, middleName, lastName, email, password)
                 }
-                if (password.length < 8) {
-                    Toast.makeText(applicationContext, "Insufficient password length!", Toast.LENGTH_SHORT).show()
-                    return
-                }
-                if (password != confirmPassword) {
-                    Toast.makeText(applicationContext, "Password confirmation failed!", Toast.LENGTH_SHORT).show()
-                    return
-                }
-                // DB Logic
-                signup(firstName, middleName, lastName, email, password)
             }
         }
     }
@@ -71,15 +61,13 @@ class SignupActivity : AppCompatActivity(), View.OnClickListener {
                 response: Response<SignupResponse>
             ) {
                 if (response.code() == 400) {
-                    Toast.makeText(applicationContext, "Failed to create user", Toast.LENGTH_LONG).show()
-
+                    Toast.makeText(applicationContext, "Failed to create user", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(
                         applicationContext,
                         "Signup successful. Log-in to proceed",
                         Toast.LENGTH_SHORT
                     ).show()
-                    // Go to Login
                     val nextActivityIntent = Intent(applicationContext, LoginActivity::class.java)
                     finish()
                     startActivity(nextActivityIntent)
