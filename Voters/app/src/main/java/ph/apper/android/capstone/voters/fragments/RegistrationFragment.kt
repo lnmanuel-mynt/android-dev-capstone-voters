@@ -152,8 +152,9 @@ class RegistrationFragment: Fragment() {
 
         view.findViewById<TextView>(R.id.tv_back).setOnClickListener {
             val nextActivityIntent = Intent(requireContext(), HomeActivity::class.java)
-            // finish()
+            activity?.finish()
             startActivity(nextActivityIntent)
+            activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 

@@ -59,6 +59,7 @@ class SignupActivity : AppCompatActivity(), View.OnClickListener {
         val nextActivityIntent = Intent(applicationContext, LoginActivity::class.java)
         finish()
         startActivity(nextActivityIntent)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 
     private fun signup(firstName: String, middleName: String, lastName: String, email: String, password: String) {
@@ -70,13 +71,13 @@ class SignupActivity : AppCompatActivity(), View.OnClickListener {
                 response: Response<SignupResponse>
             ) {
                 if (response.code() == 400) {
-                    Toast.makeText(applicationContext, "Failed to create user.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext, "Failed to create user", Toast.LENGTH_LONG).show()
 
                 } else {
                     Toast.makeText(
                         applicationContext,
                         "Signup successful. Log-in to proceed",
-                        Toast.LENGTH_LONG
+                        Toast.LENGTH_SHORT
                     ).show()
                     // Go to Login
                     val nextActivityIntent = Intent(applicationContext, LoginActivity::class.java)
@@ -87,6 +88,7 @@ class SignupActivity : AppCompatActivity(), View.OnClickListener {
 
             override fun onFailure(call: Call<SignupResponse>, t: Throwable) {
                 t.message?.let { Log.d("SIGNUP API FAILURE", it) }
+                Toast.makeText(applicationContext, "Failed to connect to server", Toast.LENGTH_SHORT).show()
             }
 
         })

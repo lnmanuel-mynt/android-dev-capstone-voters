@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_find_my_precinct.*
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.activity_profile.tv_back
@@ -14,6 +15,7 @@ import ph.apper.android.capstone.voters.model.GetUserResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 class ProfileActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -38,9 +40,10 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onBackPressed() {
-        var nextActivityIntent: Intent = Intent(applicationContext, HomeActivity::class.java)
+        val nextActivityIntent = Intent(applicationContext, HomeActivity::class.java)
         finish()
         startActivity(nextActivityIntent)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 
     private fun getData(id: String) {
@@ -51,26 +54,27 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
                 response: Response<GetUserResponse>
             ) {
                 if (response.code() == 404) {
-                    "Application Status: N/A".also { tv_status.text = it }
-                    "Voter's ID No: N/A".also { tv_voters_id.text = it }
-                    "Province: N/A".also { tv_province.text = it }
-                    "City: N/A".also { tv_city.text = it }
-                    "Barangay: N/A".also { tv_barangay.text = it }
-                    "Precinct No: N/A".also { tv_precinct.text = it }
+                    "Registration Status:  N/A".also { tv_status.text = it }
+                    "Voter's ID No:  N/A".also { tv_voters_id.text = it }
+                    "Province:  N/A".also { tv_province.text = it }
+                    "City:  N/A".also { tv_city.text = it }
+                    "Barangay:  N/A".also { tv_barangay.text = it }
+                    "Precinct No:  N/A".also { tv_precinct.text = it }
                 } else {
                     val response: GetUserResponse = response.body()!!
                     Log.d("RESPONSE BODY", response.toString())
-                    ("Application Status: " + response.status).also { tv_status.text = it }
-                    ("Voter's ID No: " + response.votersId).also { tv_voters_id.text = it }
-                    ("Province: " + response.province).also { tv_province.text = it }
-                    ("City: " + response.city).also { tv_city.text = it }
-                    ("Barangay: " + response.barangay).also { tv_barangay.text = it }
-                    ("Precinct No: " + response.precinctNumber).also { tv_precinct.text = it }
+                    ("Registration Status:  " + response.status.toUpperCase(Locale.ENGLISH)).also { tv_status.text = it }
+                    ("Voter's ID No:  " + response.votersId.toUpperCase(Locale.ENGLISH)).also { tv_voters_id.text = it }
+                    ("Province:  " + response.province.toUpperCase(Locale.ENGLISH)).also { tv_province.text = it }
+                    ("City:  " + response.city.toUpperCase(Locale.ENGLISH)).also { tv_city.text = it }
+                    ("Barangay:  " + response.barangay.toUpperCase(Locale.ENGLISH)).also { tv_barangay.text = it }
+                    ("Precinct No:  " + response.precinctNumber.toUpperCase(Locale.ENGLISH)).also { tv_precinct.text = it }
                 }
             }
 
             override fun onFailure(call: Call<GetUserResponse>, t: Throwable) {
                 t.message?.let { Log.d("GET USER API FAILURE", it) }
+                Toast.makeText(applicationContext, "User not found", Toast.LENGTH_SHORT).show()
             }
 
         })
@@ -79,9 +83,10 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v!!.id) {
             tv_back.id -> {
-                var nextActivityIntent: Intent = Intent(applicationContext, HomeActivity::class.java)
+                val nextActivityIntent = Intent(applicationContext, HomeActivity::class.java)
                 finish()
                 startActivity(nextActivityIntent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
         }
     }

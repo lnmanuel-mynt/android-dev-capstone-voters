@@ -15,5 +15,6 @@ class RegistrationActivity : AppCompatActivity() {
         val nextActivityIntent = Intent(applicationContext, HomeActivity::class.java)
         finish()
         startActivity(nextActivityIntent)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 }

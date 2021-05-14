@@ -51,7 +51,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         when(v!!.id) {
             bt_profile.id -> {
                 val nextActivityIntent = Intent(applicationContext, ProfileActivity::class.java)
-                //finish()
+                finish()
                 startActivity(nextActivityIntent)
             }
             bt_find.id -> {
@@ -78,8 +78,12 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         dialogBuilder.setPositiveButton("OK") { _, _ ->
             run {
                 val nextActivityIntent = Intent(applicationContext, LoginActivity::class.java)
+                nextActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                nextActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 finish()
                 startActivity(nextActivityIntent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
             }
         }
         dialogBuilder.setNegativeButton("CANCEL") { dialog, _ ->
@@ -110,7 +114,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             ) {
                 if (response.code() == 404) {
                     val nextActivityIntent = Intent(applicationContext, RegistrationActivity::class.java)
-                    // finish()
+                    finish()
                     startActivity(nextActivityIntent)
                 } else {
                     Toast.makeText(applicationContext, "User already registered!", Toast.LENGTH_LONG).show()
