@@ -12,7 +12,6 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_registration.*
 import ph.apper.android.capstone.voters.HomeActivity
 import ph.apper.android.capstone.voters.R
@@ -120,11 +119,9 @@ class RegistrationFragment: Fragment() {
                         et_street.text.isBlank() or et_barangay.text.isBlank() or
                         et_city.text.isBlank() or et_province.text.isBlank() or
                         et_years_in_city.text.isBlank() or et_years_in_philippines.text.isBlank() -> {
-                    Snackbar.make(requireView(), "All fields are required. Use N/A for fields that are not applicable", Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show()
+                    Toast.makeText(requireContext(), "All fields are required. Use N/A for fields that are not applicable", Toast.LENGTH_SHORT).show()
                 }
-                ChronoUnit.YEARS.between(birthDate, dateNow) < 18 -> Snackbar.make(requireView(), "You must be at least 18 years of age to register", Snackbar.LENGTH_SHORT)
-                    .setAction("Action", null).show()
+                ChronoUnit.YEARS.between(birthDate, dateNow) < 18 -> Toast.makeText(requireContext(), "You must be at least 18 years of age to register", Toast.LENGTH_SHORT).show()
                 else -> {
                     val registerParams = mapOf<String, String>(
                         "id" to id,
@@ -165,7 +162,7 @@ class RegistrationFragment: Fragment() {
             registerParams["middleName"].toString(),
             registerParams["lastName"].toString(),
             registerParams["birthDate"].toString(),
-            registerParams[" birthProvince"].toString(),
+            registerParams["birthProvince"].toString(),
             registerParams["birthCity"].toString(),
             registerParams["civilStatus"].toString(),
             registerParams["sex"].toString(),
@@ -183,20 +180,18 @@ class RegistrationFragment: Fragment() {
 
         call.enqueue(object : Callback<VoterRegistrationResponse> {
             override fun onResponse(
-                call: Call<VoterRegistrationResponse>,
-                responseVoter: Response<VoterRegistrationResponse>
+                    call: Call<VoterRegistrationResponse>,
+                    response: Response<VoterRegistrationResponse>
             ) {
-                val statusCode = responseVoter.code()
+                val statusCode = response.code()
                 if (statusCode == 201) {
                     findNavController().navigate(R.id.action_RegistrationFragment_to_RegistrationProcessingFragment)
                 } else
-                    Snackbar.make(view!!, "Error $statusCode: ${responseVoter.message()}", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show()
+                    Toast.makeText(requireContext(), "Error $statusCode: ${response.message()}", Toast.LENGTH_SHORT).show()
             }
 
             override fun onFailure(call: Call<VoterRegistrationResponse>, t: Throwable) {
-                Snackbar.make(view!!, "Failed api call. $t", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+                Toast.makeText(requireContext(), "Failed to connect to server", Toast.LENGTH_SHORT).show()
             }
         })
     }
