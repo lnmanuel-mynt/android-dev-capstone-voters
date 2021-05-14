@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:drawable="@drawable/ic_registration"
+        android:drawable="@drawable/ic_registration_v2"
         android:width="152dp"
         android:height="152dp"/>
 
