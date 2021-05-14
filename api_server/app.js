@@ -5,14 +5,13 @@ const bcrypt = require("bcrypt");
 const { v4: uuidv4, parse: uuidParse } = require("uuid");
 const e = require("express");
 const app = express();
-const  aws = require('aws-sdk')
+const aws = require("aws-sdk");
 
-const s3 = new aws.S3({ 
-        endpoint: 's3-ap-southeast-1.amazonaws.com',
-        Bucket: 'voters-ap-bucket',
-        region: 'ap-southeast-1'
-})
-
+const s3 = new aws.S3({
+    endpoint: "s3-ap-southeast-1.amazonaws.com",
+    Bucket: "voters-ap-bucket",
+    region: "ap-southeast-1",
+});
 
 app.use(
     bodyParser.urlencoded({
@@ -141,7 +140,7 @@ app.post("/voter/register", async (req, res) => {
             "years_in_ph",
             "voter_id_number",
             "precinct_number",
-	    "date_registered",
+            "date_registered",
             "registration_status",
         ],
         id,
@@ -163,7 +162,7 @@ app.post("/voter/register", async (req, res) => {
             yearsInPH,
             null,
             null,
-	    dateRegistered,
+            dateRegistered,
             "PENDING",
         ],
     ]);
@@ -182,13 +181,9 @@ app.post("/voter/register", async (req, res) => {
 
 app.get("/voter/:id", async (req, res) => {
     var id = req.params.id;
-    
+
     var selectQry = "SELECT * FROM ?? where BIN_TO_UUID(??) = ?";
-    let query = mysql.format(selectQry, [
-		"voters",
-		"id",
-		id
-	]);
+    let query = mysql.format(selectQry, ["voters", "id", id]);
     try {
         var voterInfo = await db_query(query, dbPool);
 
@@ -208,34 +203,48 @@ app.get("/voter/:id", async (req, res) => {
     }
 });
 
-app.get("/candidates/local/:position", async (req, res) => {
-    var position = req.params.position;
+app.get(
+    "/candidates/local/:position&:province&:municipality",
+    async (req, res) => {
+        var position = req.params.position;
+        var province = req.params.province;
+        var municipality = req.params.municipality;
+        var selectQry = "SELECT * FROM ?? where ?? = ? and ?? = ?";
+        let query = "";
+        if (municipality != "null")
+            query = mysql.format(selectQry, [
+                "candidates",
+                "municipality",
+                municipality,
+                "position",
+                position,
+            ]);
 
-    var selectQry = "SELECT * FROM ?? where ?? = ? and ?? = ?";
-    let query = mysql.format(selectQry, [
-        "candidates",
-        "is_national",
-        false,
-        "position",
-        position,
-    ]);
+        if (municipality == "null" && province != "")
+            query = mysql.format(selectQry, [
+                "candidates",
+                "province",
+                province,
+                "position",
+                position,
+            ]);
+        try {
+            candidates = await db_query(query, dbPool);
+            if (candidates == "")
+                return res
+                    .status(404)
+                    .send({ message: "No Candidates for this Position." });
 
-    try {
-        candidates = await db_query(query, dbPool);
-        if (candidates == "")
-            return res
-                .status(404)
-                .send({ message: "No Candidates for this Position." });
-	
-	candidatesList = await getImageURL(candidates)
+            candidatesList = await getImageURL(candidates);
 
-        return res.status(200).send({candidates: candidatesList});
-    } catch (err) {
-        return res.status(400).send({
-            message: "Error in Fetching Candidates: " + err,
-        });
+            return res.status(200).send({ candidates: candidatesList });
+        } catch (err) {
+            return res.status(400).send({
+                message: "Error in Fetching Candidates: " + err,
+            });
+        }
     }
-});
+);
 
 app.get("/candidates/national/:position", async (req, res) => {
     var position = req.params.position;
@@ -255,9 +264,9 @@ app.get("/candidates/national/:position", async (req, res) => {
             return res
                 .status(404)
                 .send({ message: "No Candidates for this Position." });
-	candidatesList = await getImageURL(candidates)
-        	console.log(candidatesList)
-	return res.status(200).send({candidates: candidatesList});
+        candidatesList = await getImageURL(candidates);
+        console.log(candidatesList);
+        return res.status(200).send({ candidates: candidatesList });
     } catch (err) {
         return res.status(400).send({
             message: "Error in Fetching Candidates: " + err,
@@ -277,7 +286,7 @@ app.get("/candidates/:id", async (req, res) => {
             return res.status(404).send({
                 message: "Candidate Profile Not Found.",
             });
-        return res.status(200).send({profile:candidateProfile[0]});
+        return res.status(200).send({ profile: candidateProfile[0] });
     } catch (err) {
         return res.status(400).send({
             message: "Error in Fetching Candidate Profile: " + err,
@@ -285,7 +294,7 @@ app.get("/candidates/:id", async (req, res) => {
     }
 });
 
-app.post("/findmyprecinct", async (req, res) => {
+app.post("/find-my-precinct", async (req, res) => {
     var firstName = req.body.first_name;
     var middleName = req.body.middle_name;
     var lastName = req.body.last_name;
@@ -454,32 +463,32 @@ function Bin2HexUUID(bin) {
     });
 }
 
-async function getImageURL(candidates){
-	for(const candidate of candidates) {
-		var url = await getSignedURL(candidate.id)
-		candidate.image = url
-	}
-	return candidates;
+async function getImageURL(candidates) {
+    for (const candidate of candidates) {
+        var url = await getSignedURL(candidate.id);
+        candidate.image = url;
+    }
+    return candidates;
 }
 
 async function getSignedURL(key) {
-         key = key + ".jpg"
-	 const params = {
-                Bucket: 'voters-ap-bucket',
-                Key: key,
-                Expires: 60*5
-        }
+    key = key + ".jpg";
+    const params = {
+        Bucket: "voters-ap-bucket",
+        Key: key,
+        Expires: 60 * 5,
+    };
 
-        try{
-                const  url = await new Promise((resolve, reject) => {
-                        s3.getSignedUrl('getObject', params, (err, url) => {
-                                err ? reject(err) : resolve(url)
-                        })
-                })
-                return url
-        } catch (err) {
-                if(err) console.log(err)
-        }
+    try {
+        const url = await new Promise((resolve, reject) => {
+            s3.getSignedUrl("getObject", params, (err, url) => {
+                err ? reject(err) : resolve(url);
+            });
+        });
+        return url;
+    } catch (err) {
+        if (err) console.log(err);
+    }
 }
 
 app.listen(5000, () => {
