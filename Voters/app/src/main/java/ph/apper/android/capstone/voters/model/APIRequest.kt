@@ -14,8 +14,6 @@ class LoginRequest {
     }
 }
 
-
-// todo add email payload
 class RegisterRequest {
     @SerializedName("id")
     var id = ""
@@ -114,13 +112,8 @@ class SignupRequest {
     @SerializedName("password")
     var password = ""
 
-    constructor(
-        firstName: String,
-        middleName: String,
-        lastName: String,
-        email: String,
-        password: String
-    ) {
+    constructor(firstName: String, middleName: String, lastName: String,
+        email: String, password: String) {
         this.firstName = firstName
         this.middleName = middleName
         this.lastName = lastName

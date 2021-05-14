@@ -61,6 +61,7 @@ class PrecinctInfo {
     @SerializedName(value = "polling_place")
     var pollingPlace = ""
 }
+
 class SignupResponse {
 
     @SerializedName("message")
@@ -109,7 +110,6 @@ class CandidateInfo{
     var district = ""
     @SerializedName("image")
     var image = ""
-
 }
 
 class GetCandidateListResponse{
