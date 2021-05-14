@@ -1,23 +1,29 @@
 <resources>
     <string name="app_name">Voters</string>
     <!-- Strings used for fragment navigation -->
-    <string name="find_my_precinct_fragment_label">Find My Precinct Fragment</string>
-    <string name="registration_personal_label">Registration Personal Fragment</string>
-    <string name="registration_residence_label">Registration Residence Fragment</string>
+    <string name="registration_label">Registration Fragment</string>
     <string name="registration_processing_label">Registration Processing Fragment</string>
     <!-- Strings used for fragment titles -->
-    <string name="find_my_precinct_fragment_title">Find My Precinct</string>
+    <string name="home_title">Home</string>
+    <string name="my_profile_title">My Profile</string>
+    <string name="registration_title">Voter\'s Registration</string>
+    <string name="kyc_title">Know Your Candidates</string>
+    <string name="find_my_precinct_title">Find My Precinct</string>
     <!-- Strings used for search result dialog -->
     <string name="result_label">Search Result</string>
-    <string name="precinct_number">Precinct Number</string>
     <string name="polling_place">Polling Place</string>
+    <string name="precinct_number">Precinct Number</string>
     <!-- Strings used for buttons -->
+    <string name="login_button">Login</string>
+    <string name="sign_up_button">Don\'t have an account? Sign up</string>
     <string name="next_button">Next</string>
     <string name="submit_button">Submit</string>
     <string name="ok_button">OK</string>
     <string name="search_button">Search</string>
     <string name="back_button">←</string>
     <string name="close_button">☓</string>
+    <string name="local_button">Local Candidates</string>
+    <string name="national_button">National Candidates</string>
     <!-- Strings used for hints -->
     <string name="first_name">First Name</string>
     <string name="middle_name">Middle Name</string>
@@ -35,8 +41,12 @@
     <!-- Strings used for registration label -->
     <string name="birthdate_label">Birthdate: </string>
     <string name="birthplace_label">Place of Birth: </string>
-    <string name="civil_status">Civil Status: </string>
-    <string name="sex">Sex: </string>
+    <string name="civil_status">Civil Status:</string>
+    <string name="sex">Sex:</string>
+    <string name="terms">I agree to Terms of Use</string>
+    <string name="review">Please review to ensure that the details are correct before you proceed.</string>
+    <string name="processing">Your application is being processed...</string>
+
     <!-- GOOGLE MAP API KEY-->
     <string name="map_key" translatable="false">AIzaSyB_qsP8AOP_P0MdlPz-48TDaJYjTP3vbjo</string>
 </resources>
