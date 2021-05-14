@@ -46,21 +46,19 @@ POST /login
 POST /register
 {
 	"id": "12345678-1234-1234-1234-123456789123",
-	"first_name": "john",
-	"middle_name": "michael",
-	"last_name": "doe",
 	"birth_date": "1995-06-25",
 	"birth_province": "metro manila",
 	"birth_city": "muntinlupa",
 	"civil_status": "SINGLE",
 	"sex": "MALE",
 	"street": "narra st",
-	"subdivision": "ayala alabang villaga",
+	"subdivision": "ayala alabang village",
 	"barangay": "ayala alabang",
 	"city": "muntinlupa",
 	"province": "metro manila",
 	"years_in_city": "25",
 	"years_in_ph": "25"
+	"date_registered": "2021-05-13"
 }
 
 201 CREATED
@@ -68,7 +66,7 @@ POST /register
 
 **Find My Precinct**
 ```
-POST /findmyprecinct
+POST /find-my-precinct
 {
 	"first_name": "john",
 	"middle_name": "michael",
@@ -139,7 +137,7 @@ GET /voter/12345678-1234-1234-1234-123456789123
 
 **Approve Voter Registration**
 ```
-POST /confirmvoter
+POST /confirm-voter
 {
 	"id": "12345678-1234-1234-1234-123456789012",
 	"precinct_number": "1234A",
