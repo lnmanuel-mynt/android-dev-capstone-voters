@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="0.90"
-                android:paddingLeft="8dp"
+                android:paddingStart="8dp"
                 android:gravity="center_vertical"
                 android:text="Voter's Registration"
                 android:fontFamily="@font/poppins_semibold"
@@ -113,6 +113,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:maxLines="1"
+                android:inputType="text"
                 android:fontFamily="@font/poppins"
                 android:hint="@string/province" />
 
@@ -120,7 +122,8 @@
                 android:id="@+id/et_birth_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:maxLines="1"
+                android:inputType="text"
                 android:fontFamily="@font/poppins"
                 android:hint="@string/city" />
         </LinearLayout>
@@ -210,6 +213,9 @@
                 android:id="@+id/et_street"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:maxLines="1"
+                android:inputType="text"
                 android:hint="@string/house_street"
                 android:fontFamily="@font/poppins" />
 
@@ -217,7 +223,8 @@
                 android:id="@+id/et_subdivision"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:maxLines="1"
+                android:inputType="text"
                 android:hint="@string/subdivision"
                 android:fontFamily="@font/poppins" />
 
@@ -225,7 +232,8 @@
                 android:id="@+id/et_barangay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:maxLines="1"
+                android:inputType="text"
                 android:hint="@string/barangay"
                 android:fontFamily="@font/poppins" />
 
@@ -233,7 +241,8 @@
                 android:id="@+id/et_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:maxLines="1"
+                android:inputType="text"
                 android:hint="@string/city"
                 android:fontFamily="@font/poppins" />
 
@@ -241,7 +250,8 @@
                 android:id="@+id/et_province"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:maxLines="1"
+                android:inputType="text"
                 android:hint="@string/province"
                 android:fontFamily="@font/poppins" />
         </LinearLayout>
@@ -253,12 +263,13 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/layout_residence_location"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/tv_review" >
+            app:layout_constraintBottom_toTopOf="@id/layout_terms" >
 
             <EditText
                 android:id="@+id/et_years_in_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:hint="@string/years_in_city"
                 android:fontFamily="@font/poppins"
                 android:inputType="number" />
@@ -267,24 +278,46 @@
                 android:id="@+id/et_years_in_philippines"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:hint="@string/years_in_ph"
                 android:fontFamily="@font/poppins"
                 android:inputType="number" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_terms"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginVertical="10dp"
+            app:layout_constraintTop_toBottomOf="@id/layout_residence_duration"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_review" >
+
+            <CheckBox
+                android:id="@+id/cb_agree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/terms"
+                android:fontFamily="@font/poppins" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/tv_review"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:text="Please review to ensure that the details are correct before you proceed."
+            android:layout_marginVertical="15dp"
+            android:text="@string/review"
             android:textSize="15sp"
             android:textAlignment="center"
             android:textStyle="italic"
             android:fontFamily="@font/poppins"
-            app:layout_constraintTop_toBottomOf="@id/layout_residence_duration"
+            app:layout_constraintTop_toBottomOf="@id/layout_terms"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toTopOf="@id/btn_submit" />
@@ -293,7 +326,10 @@
             android:id="@+id/btn_submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:text="@string/submit_button"
+            android:textSize="24sp"
+            android:textAllCaps="false"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
