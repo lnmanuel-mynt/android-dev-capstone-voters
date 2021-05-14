@@ -80,7 +80,7 @@ POST /find-my-precinct
 
 **Get Candidates**
 ```
-GET /candidates/local/mayor
+GET /candidates/local/mayor&metro+manila&quezon+city
 
 200 OK
 {
