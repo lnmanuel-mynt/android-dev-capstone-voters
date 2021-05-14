@@ -39,4 +39,25 @@
     <string name="sex">Sex: </string>
     <!-- GOOGLE MAP API KEY-->
     <string name="map_key" translatable="false">AIzaSyB_qsP8AOP_P0MdlPz-48TDaJYjTP3vbjo</string>
+    <!-- Strings for Login, Signup, Home, & Profile Activities -->
+    <string name="home">HOME</string>
+    <string name="my_profile">My Profile</string>
+    <string name="candidates">Candidates</string>
+    <string name="registration">Registration</string>
+    <string name="find_my_precint">Find My Precint</string>
+    <string name="application_status">Application Status:</string>
+    <string name="voters_id_no">Voter\'s ID No:</string>
+    <string name="profile_province">Province:</string>
+    <string name="profile_city">City/Municipality:</string>
+    <string name="profile_barangay">Barangay:</string>
+    <string name="profile_precinct_no">Precinct No:</string>
+    <string name="e_mail">E-mail</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="prompt_sign_up">Don\'t have an account? Sign up</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="surname">Surname</string>
+    <string name="prompt_password">Password (must be at least 8 characters)</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="sign_up_2">Sign Up</string>
 </resources>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity"
+    android:paddingVertical="32dp">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.10"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_45"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.45"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_55"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.55"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_90"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.90"/>
+
+    <TextView
+        android:id="@+id/tv_home"
+        android:text="@string/home"
+        android:textSize="24sp"
+        android:fontFamily="@font/poppins_semibold"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/bt_profile"
+        android:drawableTop="@drawable/layout_profile"
+        android:text="@string/my_profile"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins"
+        android:background="@android:color/transparent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintLeft_toRightOf="@id/gl_10"
+        app:layout_constraintRight_toLeftOf="@id/gl_45"
+        app:layout_constraintTop_toBottomOf="@id/tv_home"/>
+
+    <Button
+        android:id="@+id/bt_candidates"
+        android:drawableTop="@drawable/layout_candidates"
+        android:text="@string/candidates"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins"
+        android:background="@android:color/transparent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/gl_10"
+        app:layout_constraintRight_toLeftOf="@id/gl_45"
+        app:layout_constraintTop_toBottomOf="@id/bt_profile"/>
+
+    <Button
+        android:id="@+id/bt_registration"
+        android:drawableTop="@drawable/layout_registration"
+        android:text="@string/registration"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:fontFamily="@font/poppins"
+        android:background="@android:color/transparent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintLeft_toRightOf="@id/gl_55"
+        app:layout_constraintRight_toLeftOf="@id/gl_90"
+        app:layout_constraintTop_toBottomOf="@id/tv_home"/>
+
+    <Button
+        android:id="@+id/bt_find"
+        android:drawableTop="@drawable/layout_findprecinct"
+        android:text="@string/find_my_precint"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins"
+        android:background="@android:color/transparent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/gl_55"
+        app:layout_constraintRight_toLeftOf="@id/gl_90"
+        app:layout_constraintTop_toBottomOf="@id/bt_registration"/>
+
+    <TextView
+        android:id="@+id/tv_hello"
+        android:textSize="16sp"
+        android:fontFamily="@font/poppins_semibold"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

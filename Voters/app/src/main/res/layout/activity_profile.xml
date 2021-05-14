@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:weightSum="1"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" >
+        app:layout_constraintLeft_toLeftOf="parent">
 
         <TextView
             android:id="@+id/tv_back"
@@ -22,18 +22,20 @@
             android:layout_height="match_parent"
             android:layout_weight="0.10"
             android:clickable="true"
+            android:focusable="true"
             android:text="@string/back_button"
             android:fontFamily="@font/poppins_semibold"
-            android:textSize="30sp" />
+            android:textSize="30sp"/>
 
         <TextView
             android:id="@+id/tv_profile"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0.90"
-            android:paddingLeft="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:gravity="center_vertical"
-            android:text="My Profile"
+            android:text="@string/my_profile"
             android:fontFamily="@font/poppins_semibold"
             android:textSize="24sp" />
     </LinearLayout>
@@ -50,7 +52,7 @@
 
     <TextView
         android:id="@+id/tv_status"
-        android:text="Application Status: "
+        android:text="@string/application_status"
         android:textSize="24sp"
         android:fontFamily="@font/poppins"
         android:layout_width="match_parent"
@@ -60,7 +62,7 @@
 
     <TextView
         android:id="@+id/tv_voters_id"
-        android:text="Voter's ID No: "
+        android:text="@string/voters_id_no"
         android:textSize="24sp"
         android:fontFamily="@font/poppins"
         android:layout_width="match_parent"
@@ -70,7 +72,7 @@
 
     <TextView
         android:id="@+id/tv_province"
-        android:text="Province: "
+        android:text="@string/profile_province"
         android:textSize="24sp"
         android:fontFamily="@font/poppins"
         android:layout_width="match_parent"
@@ -80,7 +82,7 @@
 
     <TextView
         android:id="@+id/tv_city"
-        android:text="City/Municipality: "
+        android:text="@string/profile_city"
         android:textSize="24sp"
         android:fontFamily="@font/poppins"
         android:layout_width="match_parent"
@@ -90,7 +92,7 @@
 
     <TextView
         android:id="@+id/tv_barangay"
-        android:text="Barangay: "
+        android:text="@string/profile_barangay"
         android:textSize="24sp"
         android:fontFamily="@font/poppins"
         android:layout_width="match_parent"
@@ -100,7 +102,7 @@
 
     <TextView
         android:id="@+id/tv_precinct"
-        android:text="Precinct No: "
+        android:text="@string/profile_precinct_no"
         android:textSize="24sp"
         android:fontFamily="@font/poppins"
         android:layout_width="match_parent"
