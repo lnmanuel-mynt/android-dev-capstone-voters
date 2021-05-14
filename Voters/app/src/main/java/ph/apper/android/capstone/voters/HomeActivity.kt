@@ -19,6 +19,7 @@ import ph.apper.android.capstone.voters.model.GetUserResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -39,7 +40,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
         val sharedPref = this.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
         val email = sharedPref.getString(EMAIL_KEY, "email")
-        val firstName = sharedPref.getString(FIRST_NAME, "user")
+        val firstName = sharedPref.getString(FIRST_NAME, "user")?.capitalize(Locale.ENGLISH)
         id = sharedPref.getString(USER_ID, "ID").toString()
         Log.d("SHARED USER ID", "User ID: $id")
         Log.d("SHARED EMAIL", "Email: ${email}")

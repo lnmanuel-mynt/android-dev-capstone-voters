@@ -15,6 +15,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.time.format.SignStyle
+import java.util.*
 
 class SignupActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,9 +28,9 @@ class SignupActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v!!.id) {
             bt_signup_signup.id -> {
-                val firstName = et_signup_firstname.text.toString()
-                val middleName = et_signup_middlename.text.toString()
-                val lastName = et_signup_surname.text.toString()
+                val firstName = et_signup_firstname.text.toString().toLowerCase(Locale.ENGLISH)
+                val middleName = et_signup_middlename.text.toString().toLowerCase(Locale.ENGLISH)
+                val lastName = et_signup_surname.text.toString().toLowerCase(Locale.ENGLISH)
                 val email = et_signup_email.text.toString()
                 val password = et_signup_password.text.toString()
                 val confirmPassword = et_signup_confirm.text.toString()
@@ -55,7 +56,7 @@ class SignupActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onBackPressed() {
-        var nextActivityIntent: Intent = Intent(applicationContext, LoginActivity::class.java)
+        val nextActivityIntent = Intent(applicationContext, LoginActivity::class.java)
         finish()
         startActivity(nextActivityIntent)
     }
