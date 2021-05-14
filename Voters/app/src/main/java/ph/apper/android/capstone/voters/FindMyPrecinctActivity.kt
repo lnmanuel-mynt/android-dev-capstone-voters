@@ -87,13 +87,14 @@ class FindMyPrecinctActivity : AppCompatActivity(), View.OnClickListener {
                         )
                         showSearchResult(dialogParams)
                     }
-                    404 -> Toast.makeText(applicationContext, "No record found", Toast.LENGTH_LONG).show()
-                    else -> Toast.makeText(applicationContext, "Error: $statusCode: ${response.message()}", Toast.LENGTH_LONG).show()
+                    400 -> Toast.makeText(applicationContext, "Your registration application is still pending", Toast.LENGTH_SHORT).show()
+                    404 -> Toast.makeText(applicationContext, "No record found", Toast.LENGTH_SHORT).show()
+                    else -> Toast.makeText(applicationContext, "Error: $statusCode: ${response.message()}", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<FindMyPrecinctResponse>, t: Throwable) {
-                Toast.makeText(applicationContext, "Failed api call. $t", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Failed to connect to server", Toast.LENGTH_SHORT).show()
             }
         })
     }
