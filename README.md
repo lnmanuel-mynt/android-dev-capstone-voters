@@ -119,25 +119,6 @@ GET /candidates/national/president
 }
 ```
 
-**Get Candidate**
-```
-GET /candidates/1
-
-200 OK
-{
-	"profile": {
-        	"id": 1,
-		"name": "Jejomar Binay",
-		"position": "President",
-		"party": "UNA",
-		"is_national": 1,
-		"province": "",
-		"municipality": "",
-		"district": "",
-		"image": null
-    	}
-}
-```
 
 
 **Get Voter**
@@ -168,75 +149,3 @@ GET /voter/12345678-1234-1234-1234-123456789123
 404 NOT FOUND
 ```
 
-**Approve Voter Registration**
-```
-POST /confirm-voter
-{
-	"id": "12345678-1234-1234-1234-123456789012",
-	"precinct_number": "1234A",
-	"voter_id_number": "1234-5678912-3"
-}
-
-200 OK
-```
-
-
-**Get All Voters**
-```
-GET /voters
-
-200 OK
-[
-	{
-		"id": "12345678-1234-1234-1234-123456789123",
-		"birth_date": "1995-06-25",
-		"birth_province": "metro manila",
-		"birth_city": "muntinlupa",
-		"civil_status": "SINGLE",
-		"sex": "MALE",
-		"street": "narra st",
-		"subdivision": "ayala alabang village",
-		"barangay": "ayala alabang",
-		"city": "muntinlupa",
-		"province": "metro manila",
-		"years_in_city": "25",
-		"years_in_ph": "25",
-		"registration_status": "PENDING"
-		"precinct_number": null,
-		"voter_id_number": null,
-		"date_registered": "2021-05-13"
-	}
-]
-```
-
-**Get All Precincts**
-```
-GET /precincts
-
-200 OK
-[
-	{
-		"precinct_number": "1234A",
-		"barangay": "Ayala Alabang",
-		"city": "Muntinlupa",
-		"province": "Metro Manila",
-		"polling_place": "De La Salle Santiago Zobel School"
-	}
-]
-```
-
-**Get All Users**
-```
-GET /users
-
-200 OK
-[
-	{
-		"id": "7e34a85c-d5db-4616-95f9-11cdc9cf6805",
-		"first_name": "john",
-		"middle_name": "michael",
-		"last_name": "doe",
-		"email": "jdoe@apper.ph",
-    	},
-]
-```
