@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
     android:paddingHorizontal="32dp"
-    android:paddingBottom="32dp">
+    android:paddingBottom="32dp"
+    android:background="@drawable/gradient_selector">
 
     <ImageView
         android:id="@+id/img_logo"
@@ -40,7 +41,7 @@
 
     <Button
         android:id="@+id/bt_login_login"
-        android:backgroundTint="@color/material_on_surface_disabled"
+        android:backgroundTint="#60000000"
         android:text="@string/login"
         android:textAllCaps="false"
         android:textSize="24sp"

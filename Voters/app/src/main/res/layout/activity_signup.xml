@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SignupActivity"
-    android:padding="32dp">
+    android:padding="32dp"
+    android:background="@drawable/gradient_selector">
 
     <TextView
         android:id="@+id/tv_signup"
@@ -79,7 +80,7 @@
 
     <Button
         android:id="@+id/bt_signup_signup"
-        android:backgroundTint="@color/blue"
+        android:backgroundTint="#60000000"
         android:text="@string/sign_up_2"
         android:textAllCaps="false"
         android:textSize="24sp"
