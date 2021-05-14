@@ -58,11 +58,16 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
                 } else {
                     val response: GetUserResponse = response.body()!!
                     ("Registration Status:  " + response.status.toUpperCase(Locale.ENGLISH)).also { tv_status.text = it }
-                    ("Voter's ID No:  " + response.votersId.toUpperCase(Locale.ENGLISH)).also { tv_voters_id.text = it }
                     ("Province:  " + response.province.toUpperCase(Locale.ENGLISH)).also { tv_province.text = it }
                     ("City:  " + response.city.toUpperCase(Locale.ENGLISH)).also { tv_city.text = it }
                     ("Barangay:  " + response.barangay.toUpperCase(Locale.ENGLISH)).also { tv_barangay.text = it }
-                    ("Precinct No:  " + response.precinctNumber.toUpperCase(Locale.ENGLISH)).also { tv_precinct.text = it }
+                    if (response.votersId.isNullOrEmpty() or response.precinctNumber.isNullOrEmpty()) {
+                        "Voter's ID No:  N/A".also { tv_voters_id.text = it }
+                        "Precinct No:  N/A".also { tv_precinct.text = it }
+                    } else {
+                        ("Voter's ID No:  " + response.votersId.toUpperCase(Locale.ENGLISH)).also { tv_voters_id.text = it }
+                        ("Precinct No:  " + response.precinctNumber.toUpperCase(Locale.ENGLISH)).also { tv_precinct.text = it }
+                    }
                 }
             }
 
