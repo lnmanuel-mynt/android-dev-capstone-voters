@@ -29,7 +29,7 @@
 
         <ImageButton
             android:id="@+id/bt_profile"
-            android:src="@drawable/layout_profile"
+            android:src="@drawable/selector_profile"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
@@ -38,7 +38,7 @@
 
         <ImageButton
             android:id="@+id/bt_registration"
-            android:src="@drawable/layout_registration"
+            android:src="@drawable/selector_registration"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
@@ -58,7 +58,7 @@
 
         <ImageButton
             android:id="@+id/bt_candidates"
-            android:src="@drawable/layout_candidates"
+            android:src="@drawable/selector_candidates"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
@@ -67,7 +67,7 @@
 
         <ImageButton
             android:id="@+id/bt_find"
-            android:src="@drawable/ic_findprecinct_v2"
+            android:src="@drawable/selector_findprecinct"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
