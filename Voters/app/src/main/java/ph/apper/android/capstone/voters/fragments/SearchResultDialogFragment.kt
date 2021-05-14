@@ -1,6 +1,5 @@
 package ph.apper.android.capstone.voters.fragments
 
-import android.app.Dialog
 import android.content.res.Resources
 import android.graphics.Rect
 import android.os.Bundle
@@ -11,14 +10,13 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.fragment_search_result_dialog.*
 import kotlinx.android.synthetic.main.fragment_search_result_dialog.view.*
 import ph.apper.android.capstone.voters.R
 
 class SearchResultDialogFragment: DialogFragment(), OnMapReadyCallback {
 
-    lateinit var googleMap: GoogleMap
+    private lateinit var googleMap: GoogleMap
 
     companion object {
         const val TAG = "SearchResultDialog"
@@ -29,23 +27,17 @@ class SearchResultDialogFragment: DialogFragment(), OnMapReadyCallback {
         private const val PROVINCE = "PROVINCE"
         private const val POLLING_PLACE = "POLLING PLACE"
 
-        fun newInstance(precinctNumber: String, barangay: String, city: String, province: String, pollingPlace: String): SearchResultDialogFragment {
+        fun newInstance(dialogParams: Map<String, String>): SearchResultDialogFragment {
             val args = Bundle()
-            args.putString(PRECINCT_NUMBER, precinctNumber)
-            args.putString(BARANGAY, barangay)
-            args.putString(CITY, city)
-            args.putString(PROVINCE, province)
-            args.putString(POLLING_PLACE, pollingPlace)
+            args.putString(PRECINCT_NUMBER, dialogParams["precinctNumber"].toString())
+            args.putString(BARANGAY, dialogParams["barangay"].toString())
+            args.putString(CITY, dialogParams["city"].toString())
+            args.putString(PROVINCE, dialogParams["province"].toString())
+            args.putString(POLLING_PLACE, dialogParams["pollingPlace"].toString())
             val fragment = SearchResultDialogFragment()
             fragment.arguments = args
             return fragment
         }
-    }
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return super.onCreateDialog(savedInstanceState)
-
-
     }
 
     override fun onMapReady(map: GoogleMap?) {

@@ -22,7 +22,7 @@
         android:id="@+id/tv_processing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Your application is being processed..."
+        android:text="@string/processing"
         android:textSize="25sp"
         android:textStyle="italic"
         android:fontFamily="@font/poppins"

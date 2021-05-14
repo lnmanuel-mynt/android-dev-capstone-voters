@@ -11,7 +11,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import ph.apper.android.capstone.voters.HomeActivity
 import ph.apper.android.capstone.voters.R
-import ph.apper.android.capstone.voters.RegistrationActivity
 
 class RegistrationProcessingFragment: Fragment() {
 
