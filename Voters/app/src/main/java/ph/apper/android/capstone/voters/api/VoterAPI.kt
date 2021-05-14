@@ -9,22 +9,12 @@ interface VoterAPI {
     @Headers(
             "Accept: application/json",
             "Content-type:application/json")
-    @POST("login")
-    fun login(@Body loginRequest: LoginRequest): Call<LoginResponse>
-
-    @Headers(
-            "Accept: application/json",
-            "Content-type:application/json")
     @POST("voter/register")
     fun register(@Body registerRequest: RegisterRequest): Call<VoterRegistrationResponse>
 
-    @GET("voter/{id}")
-    fun getVoter(@Path("id") id: String)
-            : Call<VoterInfoResponse>
-
     @Headers(
             "Accept: application/json",
             "Content-type:application/json")
-    @POST("findmyprecinct")
+    @POST("find-my-precinct")
     fun findMyPrecinct(@Body findMyPrecinctRequest: FindMyPrecinctRequest): Call<FindMyPrecinctResponse>
 }
