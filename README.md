@@ -111,9 +111,6 @@ GET /voter/12345678-1234-1234-1234-123456789123
 200 OK
 {
 	"id": "12345678-1234-1234-1234-123456789123",
-	"first_name": "john",
-	"middle_name": "michael",
-	"last_name": "doe",
 	"birth_date": "1995-06-25",
 	"birth_province": "metro manila",
 	"birth_city": "mmuntinlupa",
@@ -156,9 +153,6 @@ GET /voters
 [
 	{
 		"id": "12345678-1234-1234-1234-123456789123",
-		"first_name": "john",
-		"middle_name": "michael",
-		"last_name": "doe",
 		"birth_date": "1995-06-25",
 		"birth_province": "metro manila",
 		"birth_city": "muntinlupa",
