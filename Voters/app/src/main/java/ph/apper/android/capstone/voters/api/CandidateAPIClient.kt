@@ -20,7 +20,7 @@ object CandidateAPIClient {
                 .build()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl(CandidateAPIClient.BASE_URL)
+                .baseUrl(BASE_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
