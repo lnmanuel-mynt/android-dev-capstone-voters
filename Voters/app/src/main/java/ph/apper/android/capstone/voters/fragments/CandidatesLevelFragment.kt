@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_candidates_level.*
+import ph.apper.android.capstone.voters.CandidateActivity
 import ph.apper.android.capstone.voters.R
 
 
@@ -31,17 +33,19 @@ class CandidatesLevelFragment : Fragment(), View.OnClickListener {
         navController = Navigation.findNavController(view)
         btn_local_candidates.setOnClickListener(this)
         btn_natl_candidates.setOnClickListener(this)
-
     }
 
     override fun onClick(v: View?) {
         when(v!!.id){
             btn_local_candidates.id -> {
-                navController.navigate(R.id.action_candidatesLevelFragment_to_localPositionsFragment)
+                if(CandidateActivity.isVerified) {
+                    navController.navigate(R.id.action_candidatesLevelFragment_to_localPositionsFragment)
+                }else{
+                    Toast.makeText(this.requireContext(), "Register first to access local candidates", Toast.LENGTH_SHORT).show()
+                }
             }
             btn_natl_candidates.id -> {
                 navController.navigate(R.id.action_candidatesLevelFragment_to_nationalPositionsFragment)
-
             }
         }
     }

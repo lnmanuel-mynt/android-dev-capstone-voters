@@ -70,11 +70,22 @@ class LocalPositionsFragment : Fragment(), View.OnClickListener, CandidatePositi
     }
 
     override fun onItemClick(position: Int) {
-        getLocalCandidatesList(localPositionsArray[position])
+        var province = CandidateActivity.userProvince
+        var municipality = CandidateActivity.userMunicipality
+
+        if(CandidateActivity.userMunicipality == "")
+            municipality = "null"
+
+        getLocalCandidatesList(localPositionsArray[position], province, municipality)
     }
 
-    private fun getLocalCandidatesList(position:String){
-        val call: Call<GetCandidateListResponse> = CandidateAPIClient.get.getLocalCandidates(position)
+    private fun getLocalCandidatesList(position:String, province:String, municipality:String){
+        val call: Call<GetCandidateListResponse> =
+            CandidateAPIClient.get.getLocalCandidates(
+                position,
+                province,
+                municipality
+            )
         call.enqueue(object : Callback<GetCandidateListResponse> {
             override fun onFailure(call: Call<GetCandidateListResponse>, t: Throwable) {
                 Log.d("GET REQUEST: ", "FAILED + ${t.message}")
@@ -96,4 +107,5 @@ class LocalPositionsFragment : Fragment(), View.OnClickListener, CandidatePositi
 
         })
     }
+
 }

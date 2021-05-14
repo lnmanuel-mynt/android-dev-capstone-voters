@@ -6,8 +6,11 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface CandidateAPI {
-    @GET("candidates/local/{position}")
-    fun getLocalCandidates(@Path("position") position: String)
+    @GET("candidates/local/{position}&{province}&{municipality}")
+    fun getLocalCandidates(
+        @Path("position") position: String,
+        @Path("province") province: String,
+        @Path("municipality") municipality: String)
             : Call<GetCandidateListResponse>
 
     @GET("candidates/national/{position}")
