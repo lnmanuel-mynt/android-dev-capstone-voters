@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_width="150dp"
+    android:layout_height="150dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="10dp"
-    app:cardCornerRadius="20dp">
+    app:cardCornerRadius="20dp"
+    app:cardBackgroundColor="#ecf0f1"
+    android:layout_marginLeft="20dp">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_candidate"
         android:layout_width="match_parent"
@@ -12,8 +14,8 @@
        >
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/img_candidate"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:src="@drawable/ic_user"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/tv_candidate_name"
@@ -22,12 +24,13 @@
             app:shapeAppearanceOverlay="@style/circular"
             android:padding="3dp"
             app:strokeWidth="3dp"
-            app:strokeColor="@color/black"/>
+            app:strokeColor="#7f8c8d"/>
         <TextView
             android:id="@+id/tv_candidate_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="CANDIDATE NAME"
+            android:gravity="center_horizontal"
             android:fontFamily="@font/poppins"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

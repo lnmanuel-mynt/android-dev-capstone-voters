@@ -11,27 +11,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="10dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_natl_positions"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:backgroundTint="#34495e"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:text="National Positions"
             android:fontFamily="@font/poppins"
-            android:textSize="18sp"
-            android:backgroundTint="@color/material_on_surface_disabled"/>
-        <Button
+            android:textSize="18sp"/>
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_local_positions"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:backgroundTint="#95a5a6"
             android:layout_width="180dp"
             android:layout_height="match_parent"
             android:text="Local     Positions"
             android:fontFamily="@font/poppins"
             android:textSize="18sp"
-            android:layout_marginLeft="10dp"
-            android:backgroundTint="#8CA7DD"/>
+            android:layout_marginLeft="10dp"/>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
