@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:textStyle="bold"
+        android:fontFamily="@font/poppins_semibold"
         android:text="KNOW YOUR CANDIDATES"
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/kyc_icon"/>
@@ -39,6 +40,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:text="National Positions"
+            android:fontFamily="@font/poppins"
             />
         <Button
             android:id="@+id/btn_local_candidates"
@@ -47,6 +49,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:text="Local Positions"
+            android:fontFamily="@font/poppins"
+
             />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
