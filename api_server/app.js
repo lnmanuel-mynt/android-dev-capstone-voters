@@ -111,12 +111,6 @@ app.post("/voter/register", async (req, res) => {
     var dateRegistered = req.body.date_registered;
     var id = req.body.id;
 
-    var rows = await getUserById(id, "voters");
-    if (rows != "")
-        return res.status(400).send({
-            message: "Voter already signed up.",
-        });
-
     let insertQry = "INSERT INTO ??(??) VALUES (UUID_TO_BIN(?), ?)";
 
     let query = mysql.format(insertQry, [
