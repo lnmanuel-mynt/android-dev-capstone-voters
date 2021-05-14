@@ -19,13 +19,27 @@
         <meta-data android:name="com.google.android.geo.API_KEY"
         android:value="@string/map_key"/>
 
-        <activity android:name=".CandidateActivity"/>
-        <activity android:name=".FindMyPrecinctActivity"/>
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".RegistrationActivity"/>
-        <activity android:name=".SignupActivity" />
-        <activity android:name=".LoginActivity">
+        <activity
+            android:name=".CandidateActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".FindMyPrecinctActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".HomeActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ProfileActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".RegistrationActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".SignupActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
