@@ -123,7 +123,7 @@ class RegistrationFragment: Fragment() {
                     Snackbar.make(requireView(), "All fields are required. Use N/A for fields that are not applicable", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show()
                 }
-                ChronoUnit.YEARS.between(dateNow, birthDate) < 18 -> Snackbar.make(requireView(), "You must be at least 18 years of age to register", Snackbar.LENGTH_SHORT)
+                ChronoUnit.YEARS.between(birthDate, dateNow) < 18 -> Snackbar.make(requireView(), "You must be at least 18 years of age to register", Snackbar.LENGTH_SHORT)
                     .setAction("Action", null).show()
                 else -> {
                     val registerParams = mapOf<String, String>(
@@ -173,7 +173,7 @@ class RegistrationFragment: Fragment() {
             registerParams["barangay"].toString(),
             registerParams["city"].toString(),
             registerParams["province"].toString(),
-            registerParams[" yearsInCity"].toString(),
+            registerParams["yearsInCity"].toString(),
             registerParams["yearsInPH"].toString(),
             registerParams["dateRegistered"].toString()
         )
