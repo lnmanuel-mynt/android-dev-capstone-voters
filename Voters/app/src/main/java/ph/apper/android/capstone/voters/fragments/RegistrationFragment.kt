@@ -1,10 +1,10 @@
 package ph.apper.android.capstone.voters.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_registration.*
-import ph.apper.android.capstone.voters.FindMyPrecinctActivity
 import ph.apper.android.capstone.voters.HomeActivity
 import ph.apper.android.capstone.voters.R
 import ph.apper.android.capstone.voters.api.VoterAPIClient
@@ -24,6 +23,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
+import java.util.*
 
 class RegistrationFragment: Fragment() {
 
@@ -40,11 +41,7 @@ class RegistrationFragment: Fragment() {
         return inflater.inflate(R.layout.fragment_registration, container, false)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
+    @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,15 +51,16 @@ class RegistrationFragment: Fragment() {
         firstName = sharedPreference.getString("first_name", "").toString()
         middleName = sharedPreference.getString("middle_name", "").toString()
         lastName = sharedPreference.getString("last_name", "").toString()
-        tv_name?.text = "${lastName.toUpperCase()}, ${firstName.toUpperCase()} (${middleName.toUpperCase()})"
-
+        tv_name?.text = "${lastName.toUpperCase(Locale.ROOT)}, " +
+                "${firstName.toUpperCase(Locale.ROOT)} " +
+                "(${middleName.toUpperCase(Locale.ROOT)})"
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun init(view: View) {
         val datePicker = view.findViewById<DatePicker>(R.id.date_picker_birthday)
 
-        var civilStatusArray = arrayOf(
+        val civilStatusArray = arrayOf(
             CivilStatus.SINGLE,
             CivilStatus.MARRIED,
             CivilStatus.DIVORCED,
@@ -80,15 +78,13 @@ class RegistrationFragment: Fragment() {
                 position: Int,
                 id: Long
             ) {
-                // do nothing
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                // do nothing
             }
         }
 
-        var sexArray = arrayOf(
+        val sexArray = arrayOf(
             Sex.MALE,
             Sex.FEMALE
         )
@@ -104,92 +100,102 @@ class RegistrationFragment: Fragment() {
                 position: Int,
                 id: Long
             ) {
-                // do nothing
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                // do nothing
             }
+        }
+
+        view.findViewById<CheckBox>(R.id.cb_agree).setOnCheckedChangeListener { _, isChecked ->
+            btn_submit.isEnabled = isChecked
         }
 
         view.findViewById<Button>(R.id.btn_submit).setOnClickListener {
             val dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-            val date = LocalDate.of(datePicker.year, datePicker.month + 1, datePicker.dayOfMonth)
-            val birthDate: String = date.format(dateTimeFormatter)
-            // todo age validation
-
-            val birthProvince = et_birth_province.text.toString()
-            val birthCity = et_birth_city.text.toString()
-            val civilStatus: String = spinner_civil_status.selectedItem.toString()
-            val sex: String = spinner_sex.selectedItem.toString()
-            val street = et_street.text.toString()
-            val subdivision = et_subdivision.text.toString()
-            val barangay = et_barangay.text.toString()
-            val city = et_city.text.toString()
-            val province = et_province.text.toString()
-            val yearsInCity = et_years_in_city.text.toString()
-            val yearsInPH = et_years_in_philippines.text.toString()
+            val birthDate = LocalDate.of(datePicker.year, datePicker.month + 1, datePicker.dayOfMonth)
             val dateNow = LocalDate.now()
-            val dateRegistered: String = dateNow.format(dateTimeFormatter)
 
-            var params = mapOf<String, String>(
-                    "id" to id,
-                    "firstName" to firstName,
-                    "middleName" to middleName,
-                    "lastName" to lastName,
-                    "birthDate" to date.format(dateTimeFormatter),
-                    "birthProvince" to et_birth_province.text.toString(),
-                    "birthCity" to spinner_civil_status.selectedItem.toString(),
-                    "civilStatus" to spinner_civil_status.selectedItem.toString(),
-                    "sex" to spinner_sex.selectedItem.toString(),
-                    "street" to et_street.text.toString(),
-                    "subdivision" to et_subdivision.text.toString(),
-                    "city" to et_city.text.toString(),
-                    "province" to et_province.text.toString(),
-                    "yearsInCity" to et_years_in_city.text.toString(),
-                    "yearsInPH" to et_years_in_philippines.text.toString(),
-            )
-
-            if (birthProvince.isBlank() or birthCity.isBlank() or street.isBlank() or barangay.isBlank()
-                or city.isBlank() or province.isBlank() or yearsInCity.isBlank() or yearsInPH.isBlank()) {
-                Snackbar.make(requireView(), "All fields are required", Snackbar.LENGTH_SHORT)
+            when {
+                et_birth_province.text.isBlank() or et_birth_city.text.isBlank() or
+                        et_street.text.isBlank() or et_barangay.text.isBlank() or
+                        et_city.text.isBlank() or et_province.text.isBlank() or
+                        et_years_in_city.text.isBlank() or et_years_in_philippines.text.isBlank() -> {
+                    Snackbar.make(requireView(), "All fields are required. Use N/A for fields that are not applicable", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show()
-
-                Log.d("Params", "$params")
-                Log.d("Name", "${params["lastName"]}, ${params["lastName"]} (${params["lastName"]})")
-
-            } else register(id, firstName, middleName, lastName, birthDate, birthProvince, birthCity, civilStatus, sex, street, subdivision, barangay, city, province, yearsInCity, yearsInPH, dateRegistered)
+                }
+                ChronoUnit.YEARS.between(dateNow, birthDate) < 18 -> Snackbar.make(requireView(), "You must be at least 18 years of age to register", Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null).show()
+                else -> {
+                    val registerParams = mapOf<String, String>(
+                        "id" to id,
+                        "firstName" to firstName.toLowerCase(Locale.ROOT),
+                        "middleName" to middleName.toLowerCase(Locale.ROOT),
+                        "lastName" to lastName.toLowerCase(Locale.ROOT),
+                        "birthDate" to birthDate.format(dateTimeFormatter),
+                        "birthProvince" to et_birth_province.text.toString().toLowerCase(Locale.ROOT),
+                        "birthCity" to  et_birth_city.text.toString().toLowerCase(Locale.ROOT),
+                        "civilStatus" to spinner_civil_status.selectedItem.toString(),
+                        "sex" to spinner_sex.selectedItem.toString(),
+                        "street" to et_street.text.toString().toLowerCase(Locale.ROOT),
+                        "barangay" to et_barangay.text.toString().toLowerCase(Locale.ROOT),
+                        "subdivision" to et_subdivision.text.toString().toLowerCase(Locale.ROOT),
+                        "city" to et_city.text.toString().toLowerCase(Locale.ROOT),
+                        "province" to et_province.text.toString().toLowerCase(Locale.ROOT),
+                        "yearsInCity" to et_years_in_city.text.toString(),
+                        "yearsInPH" to et_years_in_philippines.text.toString(),
+                        "dateRegistered" to dateNow.format(dateTimeFormatter)
+                    )
+                    register(registerParams)
+                }
+            }
         }
 
         view.findViewById<TextView>(R.id.tv_back).setOnClickListener {
-            var nextActivityIntent: Intent = Intent(requireContext(), HomeActivity::class.java)
+            val nextActivityIntent = Intent(requireContext(), HomeActivity::class.java)
             // finish()
             startActivity(nextActivityIntent)
         }
     }
 
-    private fun register(id: String, firstName: String, middleName: String, lastName: String, birthDate: String, birthProvince: String,
-                         birthCity: String, civilStatus: String, sex: String, street: String, subdivision: String, barangay: String,
-                         city: String, province: String, yearsInCity: String, yearsInPH: String, dateRegistered:String) {
-        var request = RegisterRequest(id, firstName, middleName, lastName, birthDate, birthProvince, birthCity, civilStatus, sex,
-            street, subdivision, barangay, city, province, yearsInCity, yearsInPH, dateRegistered)
+    private fun register(registerParams: Map<String, String>) {
+        val request = RegisterRequest(
+            registerParams["id"].toString(),
+            registerParams["firstName"].toString(),
+            registerParams["middleName"].toString(),
+            registerParams["lastName"].toString(),
+            registerParams["birthDate"].toString(),
+            registerParams[" birthProvince"].toString(),
+            registerParams["birthCity"].toString(),
+            registerParams["civilStatus"].toString(),
+            registerParams["sex"].toString(),
+            registerParams["street"].toString(),
+            registerParams["subdivision"].toString(),
+            registerParams["barangay"].toString(),
+            registerParams["city"].toString(),
+            registerParams["province"].toString(),
+            registerParams[" yearsInCity"].toString(),
+            registerParams["yearsInPH"].toString(),
+            registerParams["dateRegistered"].toString()
+        )
+
         val call: Call<VoterRegistrationResponse> = VoterAPIClient.post.register(request)
 
         call.enqueue(object : Callback<VoterRegistrationResponse> {
-            override fun onResponse(call: Call<VoterRegistrationResponse>, responseVoter: Response<VoterRegistrationResponse>) {
+            override fun onResponse(
+                call: Call<VoterRegistrationResponse>,
+                responseVoter: Response<VoterRegistrationResponse>
+            ) {
                 val statusCode = responseVoter.code()
-                if(statusCode == 201) {
-                    Log.d("Request", "$request")
+                if (statusCode == 201) {
                     findNavController().navigate(R.id.action_RegistrationFragment_to_RegistrationProcessingFragment)
-                }
-                else
+                } else
                     Snackbar.make(view!!, "Error $statusCode: ${responseVoter.message()}", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show()
+                        .setAction("Action", null).show()
             }
 
             override fun onFailure(call: Call<VoterRegistrationResponse>, t: Throwable) {
                 Snackbar.make(view!!, "Failed api call. $t", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show()
+                    .setAction("Action", null).show()
             }
         })
     }
