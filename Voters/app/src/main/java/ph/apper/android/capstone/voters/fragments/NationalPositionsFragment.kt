@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,7 +36,6 @@ class NationalPositionsFragment : Fragment(), View.OnClickListener, CandidatePos
     )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -60,7 +60,11 @@ class NationalPositionsFragment : Fragment(), View.OnClickListener, CandidatePos
     override fun onClick(v: View?) {
         when(v!!.id) {
             btn_local_positions.id -> {
-                navController.navigate(R.id.action_nationalPositionsFragment_to_localPositionsFragment)
+                if(CandidateActivity.isVerified) {
+                    navController.navigate(R.id.action_nationalPositionsFragment_to_localPositionsFragment)
+                }else{
+                    Toast.makeText(this.requireContext(), "Register first to access local candidates", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
