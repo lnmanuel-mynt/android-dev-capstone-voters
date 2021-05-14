@@ -80,26 +80,62 @@ POST /find-my-precinct
 
 **Get Candidates**
 ```
-GET /candidates/{position}
+GET /candidates/local/mayor
 
 200 OK
-[
-	{
-		"first_name": "Rodrigo",
-		"image": ""
-	}
-]
+{
+	"candidates": [
+    		{
+			"id": 71,
+			"first_name": "Herbert Bautista",
+			"position": "Mayor",
+			"party": "Liberal",
+			"is_national": 0,
+			"province": "",
+			"municipality": "Quezon City",
+            		"district": "",
+            		"image": "https://voters-ap-bucket.s3-ap-southeast-1.amazonaws.com/71.jpg?{s3 pre-signed url}"
+		}
+	]
+}
+
+GET /candidates/national/president
+
+200 OK
+{
+	"candidates": [
+    		{
+			"id": 1,
+			"name": "Jejomar Binay",
+			"position": "President",
+			"party": "UNA",
+			"is_national": 1,
+			"province": "",
+			"municipality": "",
+			"district": "",
+			"image": "https://voters-ap-bucket.s3-ap-southeast-1.amazonaws.com/1.jpg?{s3 pre-signed url}"
+        	}
+	]
+}
 ```
 
 **Get Candidate**
 ```
-GET /candidates/profile/{id}
+GET /candidates/1
 
 200 OK
 {
-	"name": "Rodrigo Roa Duterte",
-	"position": "President",
-	"party": "PDP-Laban"
+	"profile": {
+        	"id": 1,
+		"name": "Jejomar Binay",
+		"position": "President",
+		"party": "UNA",
+		"is_national": 1,
+		"province": "",
+		"municipality": "",
+		"district": "",
+		"image": null
+    	}
 }
 ```
 
@@ -189,4 +225,18 @@ GET /precincts
 ]
 ```
 
+**Get All Users**
+```
+GET /users
 
+200 OK
+[
+	{
+		"id": "7e34a85c-d5db-4616-95f9-11cdc9cf6805",
+		"first_name": "john",
+		"middle_name": "michael",
+		"last_name": "doe",
+		"email": "jdoe@apper.ph",
+    	},
+]
+```
