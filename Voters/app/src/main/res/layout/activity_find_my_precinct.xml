@@ -102,7 +102,6 @@
         android:id="@+id/btn_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#60000000"
         android:text="@string/search_button"
         android:textSize="24sp"
         android:textColor="@color/white"

@@ -336,7 +336,6 @@
             android:text="@string/submit_button"
             android:textSize="24sp"
             android:textAllCaps="false"
-            android:backgroundTint="#60000000"
             android:fontFamily="@font/poppins"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
