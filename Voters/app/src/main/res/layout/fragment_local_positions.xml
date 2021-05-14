@@ -34,6 +34,7 @@
             android:layout_marginLeft="10dp"
             android:fontFamily="@font/poppins"
             android:text="Local     Positions"
+            android:textColor="@color/white"
             android:textSize="18sp" />
 
     </LinearLayout>

@@ -23,7 +23,8 @@
             android:layout_height="wrap_content"
             android:text="National Positions"
             android:fontFamily="@font/poppins"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            android:textColor="@color/white"/>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_local_positions"
             style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
