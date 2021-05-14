@@ -2,21 +2,29 @@ package ph.apper.android.capstone.voters.fragments
 
 import android.content.res.Resources
 import android.graphics.Rect
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.fragment_search_result_dialog.*
 import kotlinx.android.synthetic.main.fragment_search_result_dialog.view.*
 import ph.apper.android.capstone.voters.R
+import java.io.IOException
+import java.util.*
 
 class SearchResultDialogFragment: DialogFragment(), OnMapReadyCallback {
 
     private lateinit var googleMap: GoogleMap
+    private lateinit var locationCoordinates: LatLng
 
     companion object {
         const val TAG = "SearchResultDialog"
@@ -43,6 +51,10 @@ class SearchResultDialogFragment: DialogFragment(), OnMapReadyCallback {
     override fun onMapReady(map: GoogleMap?) {
         map?.let{
             googleMap = it
+
+            val pollingPlace = LatLng(locationCoordinates.latitude, locationCoordinates.longitude)
+            map.addMarker(MarkerOptions().position(pollingPlace).title("Your polling place is here."))
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(pollingPlace, 15f), 3000, null)
         }
     }
 
@@ -61,6 +73,10 @@ class SearchResultDialogFragment: DialogFragment(), OnMapReadyCallback {
         mv_google_map.onResume()
 
         mv_google_map.getMapAsync(this)
+
+        val coordinates = getCoordinates(tv_polling_place.text.toString())
+        if (coordinates != null)
+            locationCoordinates = coordinates
 
         view.findViewById<TextView>(R.id.tv_close).setOnClickListener {
             dismiss()
@@ -90,5 +106,20 @@ class SearchResultDialogFragment: DialogFragment(), OnMapReadyCallback {
         val width = rect.width() * percentWidth
         val height = rect.height() * percentHeight
         dialog?.window?.setLayout(width.toInt(), height.toInt())
+    }
+
+    private fun getCoordinates(location: String): LatLng? {
+        val geocoder = Geocoder(this.requireContext(), Locale.getDefault())
+        var p1: LatLng? = null
+        try {
+            val addressList: List<Address> = geocoder.getFromLocationName(location, 1)
+            if ((true) and (addressList.isNotEmpty())) {
+                val address: Address = addressList[0]
+                p1 = LatLng(address.latitude, address.longitude)
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return p1
     }
 }
