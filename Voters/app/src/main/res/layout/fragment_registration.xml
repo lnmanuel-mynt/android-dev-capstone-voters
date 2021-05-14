@@ -25,6 +25,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.10"
                 android:clickable="true"
+                android:focusable="true"
                 android:text="@string/back_button"
                 android:fontFamily="@font/poppins_semibold"
                 android:textSize="30sp" />
@@ -35,6 +36,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.90"
                 android:paddingStart="8dp"
+                android:paddingEnd="0dp"
                 android:gravity="center_vertical"
                 android:text="Voter's Registration"
                 android:fontFamily="@font/poppins_semibold"
@@ -97,10 +99,10 @@
             android:id="@+id/layout_birthplace"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             app:layout_constraintTop_toBottomOf="@id/layout_birthdate"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/layout_other" >
+            app:layout_constraintRight_toRightOf="parent" >
 
             <TextView
                 android:layout_width="match_parent"
@@ -133,11 +135,12 @@
             android:id="@+id/layout_other"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             app:layout_constraintTop_toBottomOf="@id/layout_birthplace"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/tv_residence_info" >
+            app:layout_constraintLeft_toLeftOf="parent">
 
             <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="4" >
@@ -145,7 +148,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:layout_gravity="center"
                     android:text="@string/civil_status"
                     android:fontFamily="@font/poppins" />
@@ -154,11 +157,13 @@
                     android:id="@+id/spinner_civil_status"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="2.5"
                     android:theme="@style/Theme.Voters.Spinner" />
+
             </LinearLayout>
 
             <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -167,7 +172,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:layout_gravity="center"
                     android:text="@string/sex"
                     android:fontFamily="@font/poppins" />
@@ -176,24 +181,25 @@
                     android:id="@+id/spinner_sex"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="2.5"
                     android:theme="@style/Theme.Voters.Spinner" />
+
             </LinearLayout>
+
         </LinearLayout>
 
         <View style="@style/Theme.Voters.Divider"
             android:id="@+id/v_divider_personal_residence"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             app:layout_constraintTop_toBottomOf="@id/layout_other"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/tv_residence_info" />
+            app:layout_constraintLeft_toLeftOf="parent"/>
 
         <TextView
             android:id="@+id/tv_residence_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:text="@string/residence_info_label"
             android:fontFamily="@font/poppins_semibold"
             app:layout_constraintTop_toBottomOf="@id/v_divider_personal_residence"
@@ -330,6 +336,8 @@
             android:text="@string/submit_button"
             android:textSize="24sp"
             android:textAllCaps="false"
+            android:backgroundTint="#60000000"
+            android:fontFamily="@font/poppins"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
