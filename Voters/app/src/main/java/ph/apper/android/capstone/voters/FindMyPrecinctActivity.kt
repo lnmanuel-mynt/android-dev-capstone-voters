@@ -1,5 +1,6 @@
 package ph.apper.android.capstone.voters
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -28,6 +29,16 @@ class FindMyPrecinctActivity : AppCompatActivity(), View.OnClickListener {
 
         btn_search.setOnClickListener(this)
         tv_back.setOnClickListener(this)
+
+        val sharedPref = this.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        val firstName = sharedPref.getString("first_name", "")?.capitalize(Locale.ENGLISH)
+        val middleName = sharedPref.getString("middle_name", "")?.capitalize(Locale.ENGLISH)
+        val lastName = sharedPref.getString("last_name", "")?.capitalize(Locale.ENGLISH)
+
+        et_first_name.setText(firstName)
+        et_middle_name.setText(middleName)
+        et_last_name.setText(lastName)
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
