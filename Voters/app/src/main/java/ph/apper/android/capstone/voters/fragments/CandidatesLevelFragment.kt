@@ -1,15 +1,18 @@
 package ph.apper.android.capstone.voters.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_candidates_level.*
 import ph.apper.android.capstone.voters.CandidateActivity
+import ph.apper.android.capstone.voters.HomeActivity
 import ph.apper.android.capstone.voters.R
 
 
@@ -33,6 +36,15 @@ class CandidatesLevelFragment : Fragment(), View.OnClickListener {
         navController = Navigation.findNavController(view)
         btn_local_candidates.setOnClickListener(this)
         btn_natl_candidates.setOnClickListener(this)
+
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val nextActivityIntent = Intent(requireContext(), HomeActivity::class.java)
+                activity?.finish()
+                startActivity(nextActivityIntent)
+                activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            }
+        })
     }
 
     override fun onClick(v: View?) {
