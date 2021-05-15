@@ -117,8 +117,7 @@ class FindMyPrecinctActivity : AppCompatActivity(), View.OnClickListener {
         SearchResultDialogFragment.newInstance(dialogParams).show(supportFragmentManager, SearchResultDialogFragment.TAG)
     }
 
-    @SuppressLint("DefaultLocale")
     private fun String.capitalizeWords(): String {
-        return split(" ").joinToString(" ") { it.capitalize() }
+        return split(" ").joinToString(" ") { it.capitalize(Locale.ENGLISH) }
     }
 }
