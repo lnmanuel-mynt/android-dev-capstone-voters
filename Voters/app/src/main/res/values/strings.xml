@@ -71,4 +71,5 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="sign_up_2">Sign Up</string>
     <string name="candidate_head">Candidate Profile</string>
+    <string name="voters_registration">Voter\'s Registration</string>
 </resources>
