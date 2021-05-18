@@ -14,17 +14,17 @@ import retrofit2.Response
 
 class CandidateActivity : AppCompatActivity(){
     companion object{
-        var candidateList: ArrayList<CandidateInfo> = ArrayList()
+        var candidateList: List<CandidateInfo> = ArrayList()
         var candidatePosition: String = ""
         var userProvince: String = ""
         var userMunicipality: String = ""
         var isVerified: Boolean = false
 
         fun clearArray(){
-            candidateList.clear()
+            candidateList = emptyList()
         }
 
-        fun populateList(items: ArrayList<CandidateInfo>?){
+        fun populateList(items: List<CandidateInfo>?){
             candidateList = items!!
         }
 
