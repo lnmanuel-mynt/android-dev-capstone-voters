@@ -59,7 +59,14 @@ class CandidatesLevelFragment : Fragment(), View.OnClickListener {
         when(v!!.id){
             btn_local_candidates.id -> {
                 if(CandidateActivity.isVerified) {
-                    navController.navigate(R.id.action_candidatesLevelFragment_to_localPositionsFragment)
+                    var province = CandidateActivity.userProvince
+                    var municipality = CandidateActivity.userMunicipality
+
+                    if(CandidateActivity.userMunicipality == "")
+                        municipality = "null"
+
+                    getLocalCandidatesListByPosition(province, municipality)
+                    // navController.navigate(R.id.action_candidatesLevelFragment_to_localPositionsFragment)
                 }else{
                     Toast.makeText(this.requireContext(), "Register first to access local candidates", Toast.LENGTH_SHORT).show()
                 }
@@ -81,9 +88,9 @@ class CandidatesLevelFragment : Fragment(), View.OnClickListener {
             }
 
             override fun onResponse(
-                call: Call<GetCandidateListResponse>,
-                response: Response<GetCandidateListResponse>
-            ) {
+              call: Call<GetCandidateListResponse>,
+              response: Response<GetCandidateListResponse>
+             ) {
                 if(response.code() == 404){
                     Log.d("GET REQUEST: ", "NO DATA")
                     return
@@ -92,8 +99,27 @@ class CandidatesLevelFragment : Fragment(), View.OnClickListener {
                 CandidateActivity.populateList(sortedList)
                 navController.navigate(R.id.action_candidatesLevelFragment_to_partiesFragment)
             }
+        })
+    }
+   private fun getLocalCandidatesListByPosition(province: String, municipality: String) {
+        val call: Call<GetCandidateListResponse> =
+                CandidateAPIClient.get.getLocalCandidatesByPosition(province, municipality)
+        call.enqueue(object : Callback<GetCandidateListResponse> {
+            override fun onFailure(call: Call<GetCandidateListResponse>, t: Throwable) {
+                Log.d("GET REQUEST: ", "FAILED + ${t.message}")
+            }
 
-
+            override fun onResponse(
+                    call: Call<GetCandidateListResponse>,
+                    response: Response<GetCandidateListResponse>
+            ) {
+                if(response.code() == 404){
+                    Log.d("GET REQUEST: ", "NO DATA")
+                    return
+                }
+                CandidateActivity.populateList(response.body()?.candidateList)
+                navController.navigate(R.id.action_level_to_new_local_fragment)
+            }
         })
     }
 }

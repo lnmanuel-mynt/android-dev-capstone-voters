@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.google.gson.internal.bind.ArrayTypeAdapter
 import kotlinx.android.synthetic.main.activity_profile.*
 import ph.apper.android.capstone.voters.api.APIClient
 import ph.apper.android.capstone.voters.model.CandidateInfo
@@ -12,26 +13,38 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CandidateActivity : AppCompatActivity(){
+class   CandidateActivity : AppCompatActivity(){
     companion object{
-        var candidateList: List<CandidateInfo> = ArrayList()
+
+        var candidateList: List<CandidateInfo> = ArrayList(
+        //var candidateList: ArrayList<CandidateInfo> = ArrayList()
+        var runningMatesList: ArrayList<CandidateInfo> = ArrayList()
+
         var candidatePosition: String = ""
         var userProvince: String = ""
         var userMunicipality: String = ""
         var isVerified: Boolean = false
 
         fun clearArray(){
-            candidateList = emptyList()
+            candidateList = 
+            runningMatesList = emptyList()
         }
 
         fun populateList(items: List<CandidateInfo>?){
             candidateList = items!!
         }
 
+        fun populateRunningMatesList(items: ArrayList<CandidateInfo>?){
+            items!!.filterTo(runningMatesList, {
+                it.name != selectedCandidate.name
+            })
+        }
+
         var selectedCandidate: CandidateInfo = CandidateInfo()
     }
 
     private val USER_ID = "user_id"
+    var fragmentManager =  supportFragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +56,7 @@ class CandidateActivity : AppCompatActivity(){
         if(id != null){
             getData(id)
         }
+
     }
 
     private fun getData(id: String) {

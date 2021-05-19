@@ -12,6 +12,9 @@
         android:label="fragment_candidates_level"
         tools:layout="@layout/fragment_candidates_level" >
         <action
+            android:id="@+id/action_level_to_new_local_fragment"
+            app:destination="@id/localCandidatesByPositionFragment"/>
+        <action
             android:id="@+id/action_candidatesLevelFragment_to_nationalPositionsFragment"
             app:destination="@id/nationalPositionsFragment" />
         <action
@@ -35,11 +38,13 @@
         android:name="ph.apper.android.capstone.voters.fragments.CandidateProfileFragment"
         android:label="fragment_candidate_profile"
         tools:layout="@layout/fragment_candidate_profile" />
+
     <fragment
         android:id="@+id/localPositionsFragment"
         android:name="ph.apper.android.capstone.voters.fragments.LocalPositionsFragment"
         android:label="fragment_local_positions"
         tools:layout="@layout/fragment_local_positions" >
+
         <action
             android:id="@+id/action_localPositionsFragment_to_candidatesFragment"
             app:destination="@id/candidatesFragment" />
@@ -65,7 +70,16 @@
         android:label="fragment_parties"
         tools:layout="@layout/fragment_parties" >
         <action
-            android:id="@+id/action_partiesFragment_to_candidateProfileFragment"
+              android:id="@+id/action_partiesFragment_to_candidateProfileFragment"
+              app:destination="@id/candidateProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/localCandidatesByPositionFragment"
+        android:name="ph.apper.android.capstone.voters.fragments.LocalCandidatesByPositionFragment"
+        android:label="fragment_local_candidates_by_position"
+        tools:layout="@layout/fragment_local_candidates_by_position" >
+        <action
+            android:id="@+id/action_localCandidatesByPositionFragment_to_candidateProfileFragment"
             app:destination="@id/candidateProfileFragment" />
     </fragment>
 </navigation>
