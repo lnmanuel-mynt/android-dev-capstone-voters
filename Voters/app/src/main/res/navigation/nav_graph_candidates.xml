@@ -66,5 +66,8 @@
         android:name="ph.apper.android.capstone.voters.fragments.LocalCandidatesByPositionFragment"
         android:label="fragment_local_candidates_by_position"
         tools:layout="@layout/fragment_local_candidates_by_position" >
+        <action
+            android:id="@+id/action_localCandidatesByPositionFragment_to_candidateProfileFragment"
+            app:destination="@id/candidateProfileFragment" />
     </fragment>
 </navigation>
