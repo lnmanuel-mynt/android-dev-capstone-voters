@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Voters</string>
+    <string name="app_name">iBoto</string>
     <!-- Strings used for fragment navigation -->
     <string name="registration_label">Registration Fragment</string>
     <string name="registration_processing_label">Registration Processing Fragment</string>
@@ -71,4 +71,5 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="sign_up_2">Sign Up</string>
     <string name="candidate_head">Candidate Profile</string>
+    <string name="voters_registration">Voter\'s Registration</string>
 </resources>

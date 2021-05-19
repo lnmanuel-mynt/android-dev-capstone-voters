@@ -35,7 +35,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         bt_candidates.setOnClickListener(this)
 
         val sharedPref = this.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-        val firstName = sharedPref.getString(firstName, "")?.capitalize(Locale.ENGLISH)
+        val firstName = sharedPref.getString(firstName, "")?.capitalizeWords()
         id = sharedPref.getString(userId, "").toString()
         "Hello, $firstName!".also { tv_hello.text = it }
     }
@@ -119,4 +119,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
         })
     }
+
+    private fun String.capitalizeWords(): String {
+        return split(" ").joinToString(" ") { it.capitalize(Locale.ENGLISH) }
+    }
+
 }

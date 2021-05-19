@@ -27,4 +27,10 @@ interface CandidateAPI {
         @Path("province") province: String,
         @Path("municipality") municipality: String,
         ): Call<GetCandidateListResponse>
+  
+    @GET("candidates/local/{province}&{municipality}")
+    fun getLocalCandidatesByPosition(
+            @Path("province") province: String,
+            @Path("municipality") municipality: String)
+            : Call<GetCandidateListResponse>
 }

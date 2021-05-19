@@ -1,4 +1,4 @@
-# Vot API Documentation
+# iBoto API Documentation
 ## Features
 
 - Profile
@@ -75,6 +75,7 @@ POST /find-my-precinct
 }
 
 200 OK
+400 BAD REQUEST
 404 NOT FOUND
 ```
 
@@ -91,13 +92,14 @@ GET /candidates/local/mayor&metro+manila&quezon+city
 			"position": "Mayor",
 			"party": "Liberal",
 			"is_national": 0,
-			"province": "",
+			"province": "Metro Manila",
 			"municipality": "Quezon City",
             		"district": "",
             		"image": "https://voters-ap-bucket.s3-ap-southeast-1.amazonaws.com/71.jpg?{s3 pre-signed url}"
 		}
 	]
 }
+
 
 GET /candidates/national/president
 
@@ -130,7 +132,7 @@ GET /voter/12345678-1234-1234-1234-123456789123
 	"id": "12345678-1234-1234-1234-123456789123",
 	"birth_date": "1995-06-25",
 	"birth_province": "metro manila",
-	"birth_city": "mmuntinlupa",
+	"birth_city": "muntinlupa",
 	"civil_status": "SINGLE",
 	"sex": "MALE",
 	"street": "narra st",

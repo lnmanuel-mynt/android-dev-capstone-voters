@@ -38,7 +38,7 @@
                 android:paddingStart="8dp"
                 android:paddingEnd="0dp"
                 android:gravity="center_vertical"
-                android:text="Voter's Registration"
+                android:text="@string/voters_registration"
                 android:fontFamily="@font/poppins_semibold"
                 android:textSize="24sp" />
         </LinearLayout>
@@ -334,6 +334,7 @@
             android:layout_height="wrap_content"
             android:enabled="false"
             android:text="@string/submit_button"
+            android:textColor="@color/white"
             android:textSize="24sp"
             android:textAllCaps="false"
             android:fontFamily="@font/poppins"
