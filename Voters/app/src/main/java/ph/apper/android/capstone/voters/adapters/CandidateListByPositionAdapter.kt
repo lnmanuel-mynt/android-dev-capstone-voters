@@ -10,7 +10,7 @@ import ph.apper.android.capstone.voters.R
 import ph.apper.android.capstone.voters.model.CandidateInfo
 
 class CandidateListByPositionAdapter (
-        val candidateList: ArrayList<CandidateInfo>,
+        val candidateList: List<CandidateInfo>,
         val context: Context,
         val listener: OnItemClickListener)
     :RecyclerView.Adapter<CandidateListByPositionAdapter.CandidateViewHolder>() {
