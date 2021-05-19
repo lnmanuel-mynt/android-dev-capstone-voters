@@ -55,7 +55,6 @@ class CandidatesFragment : Fragment(), CandidateListAdapter.OnItemClickListener 
             CandidateActivity.candidateList[position].province,
             CandidateActivity.candidateList[position].municipality
             )
-        navController.navigate(R.id.action_candidatesFragment_to_candidateProfileFragment)
     }
 
     private fun getRunningMatesList(party:String, province:String, municipality:String){
@@ -79,6 +78,7 @@ class CandidatesFragment : Fragment(), CandidateListAdapter.OnItemClickListener 
                     return
                 }
                 CandidateActivity.populateRunningMatesList(response.body()?.candidateList)
+                navController.navigate(R.id.action_candidatesFragment_to_candidateProfileFragment)
             }
         })
     }
