@@ -22,6 +22,7 @@ class CandidateListAdapter(
         {
             val img_candidate = view.img_candidate
             val tv_candidate_name = view.tv_candidate_name
+
             init{
                 view.setOnClickListener(this)
             }
