@@ -26,6 +26,10 @@ class CandidateListByPositionAdapter (
         }
 
         override fun onClick(v: View?) {
+            val position : Int = adapterPosition
+            if(position != RecyclerView.NO_POSITION){
+                listener.onItemClick(position)
+            }
         }
     }
 
