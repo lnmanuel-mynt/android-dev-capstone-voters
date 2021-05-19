@@ -23,7 +23,7 @@ class   CandidateActivity : AppCompatActivity(){
         var isVerified: Boolean = false
 
         fun clearArray(){
-            candidateList.clear()
+            runningMatesList.clear()
         }
 
         fun populateList(items: ArrayList<CandidateInfo>?){
@@ -31,7 +31,9 @@ class   CandidateActivity : AppCompatActivity(){
         }
 
         fun populateRunningMatesList(items: ArrayList<CandidateInfo>?){
-            runningMatesList = items!!
+            items!!.filterTo(runningMatesList, {
+                it.name != selectedCandidate.name
+            })
         }
 
         var selectedCandidate: CandidateInfo = CandidateInfo()
