@@ -59,7 +59,7 @@ class CandidatesLevelFragment : Fragment(), View.OnClickListener {
         when(v!!.id){
             btn_local_candidates.id -> {
                 if(CandidateActivity.isVerified) {
-                    var province = CandidateActivity.userProvince
+                    val province = CandidateActivity.userProvince
                     var municipality = CandidateActivity.userMunicipality
 
                     if(CandidateActivity.userMunicipality == "")
@@ -95,8 +95,10 @@ class CandidatesLevelFragment : Fragment(), View.OnClickListener {
                     Log.d("GET REQUEST: ", "NO DATA")
                     return
                 }
-                var sortedList = response.body()?.candidateList?.sortedWith(compareBy({it.party}, {it.positionNumber.toInt()}))
-                CandidateActivity.populateList(sortedList)
+                val sortedList = response.body()?.candidateList
+                sortedList?.removeAll { it.position == "PartyList" }
+                val finalList = sortedList?.sortedWith(compareBy({it.party}, {it.positionNumber.toInt()}))
+                CandidateActivity.populateList(finalList)
                 navController.navigate(R.id.action_candidatesLevelFragment_to_partiesFragment)
             }
         })
