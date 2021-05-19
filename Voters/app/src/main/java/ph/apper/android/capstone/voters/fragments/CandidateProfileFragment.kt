@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.HorizontalScrollView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_candidate_profile.*
@@ -14,12 +16,12 @@ import kotlinx.android.synthetic.main.fragment_candidate_profile.view.*
 import kotlinx.android.synthetic.main.fragment_candidates.view.*
 import ph.apper.android.capstone.voters.CandidateActivity
 import ph.apper.android.capstone.voters.R
-import ph.apper.android.capstone.voters.adapters.CandidateListAdapter
+import ph.apper.android.capstone.voters.adapters.RunningMateListAdapter
 import ph.apper.android.capstone.voters.model.CandidateInfo
 
-class CandidateProfileFragment : Fragment(), CandidateListAdapter.OnItemClickListener {
+class CandidateProfileFragment : Fragment(), RunningMateListAdapter.OnItemClickListener {
     companion object {
-        lateinit var runningMatesAdapter: CandidateListAdapter
+        lateinit var runningMatesAdapter: RunningMateListAdapter
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,19 +54,18 @@ class CandidateProfileFragment : Fragment(), CandidateListAdapter.OnItemClickLis
                 .error(R.drawable.ic_user)
                 .into(img_candidate)
         }
-
-        view.rv_running_mates.layoutManager = GridLayoutManager(this.requireActivity().applicationContext, 2)
-        runningMatesAdapter = CandidateListAdapter(CandidateActivity.runningMatesList, this.requireActivity().applicationContext, this)
+        view.rv_running_mates.layoutManager = LinearLayoutManager(this.requireActivity().applicationContext,LinearLayoutManager.HORIZONTAL, false)
+        runningMatesAdapter = RunningMateListAdapter(CandidateActivity.runningMatesList, this.requireActivity().applicationContext, this)
         view.rv_running_mates.adapter = runningMatesAdapter
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        CandidateActivity.selectedCandidate = CandidateInfo()
+        CandidateActivity.clearArray()
     }
 
     override fun onItemClick(position: Int) {
-        TODO("Not yet implemented")
+        Log.d("LOG", "${position}")
     }
 
 }
