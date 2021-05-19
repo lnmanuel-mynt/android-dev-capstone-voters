@@ -16,6 +16,7 @@ import ph.apper.android.capstone.voters.CandidateActivity
 import ph.apper.android.capstone.voters.HomeActivity
 import ph.apper.android.capstone.voters.R
 import ph.apper.android.capstone.voters.api.CandidateAPIClient
+import ph.apper.android.capstone.voters.model.CandidateInfo
 import ph.apper.android.capstone.voters.model.GetCandidateListResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,6 +43,7 @@ class CandidatesLevelFragment : Fragment(), View.OnClickListener {
         navController = Navigation.findNavController(view)
         btn_local_candidates.setOnClickListener(this)
         btn_natl_candidates.setOnClickListener(this)
+        btn_parties.setOnClickListener(this)
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -72,10 +74,34 @@ class CandidatesLevelFragment : Fragment(), View.OnClickListener {
             btn_natl_candidates.id -> {
                 navController.navigate(R.id.action_candidatesLevelFragment_to_nationalPositionsFragment)
             }
+            btn_parties.id -> {
+                getCandidatesList()
+            }
         }
     }
 
-    private fun getLocalCandidatesListByPosition(province: String, municipality: String) {
+    private fun getCandidatesList() {
+        val call: Call<GetCandidateListResponse> = CandidateAPIClient.get.getCandidates()
+        call.enqueue(object : Callback<GetCandidateListResponse> {
+            override fun onFailure(call: Call<GetCandidateListResponse>, t: Throwable) {
+                Log.d("GET REQUEST: ", "FAILED + ${t.message}")
+            }
+
+            override fun onResponse(
+              call: Call<GetCandidateListResponse>,
+              response: Response<GetCandidateListResponse>
+             ) {
+                if(response.code() == 404){
+                    Log.d("GET REQUEST: ", "NO DATA")
+                    return
+                }
+                var sortedList = response.body()?.candidateList?.sortedWith(compareBy({it.party}, {it.positionNumber.toInt()}))
+                CandidateActivity.populateList(sortedList)
+                navController.navigate(R.id.action_candidatesLevelFragment_to_partiesFragment)
+            }
+        })
+    }
+   private fun getLocalCandidatesListByPosition(province: String, municipality: String) {
         val call: Call<GetCandidateListResponse> =
                 CandidateAPIClient.get.getLocalCandidatesByPosition(province, municipality)
         call.enqueue(object : Callback<GetCandidateListResponse> {

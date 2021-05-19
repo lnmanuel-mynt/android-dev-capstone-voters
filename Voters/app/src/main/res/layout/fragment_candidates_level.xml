@@ -30,7 +30,7 @@
         android:id="@+id/kyc_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:fontFamily="@font/poppins_semibold"
         android:text="KNOW YOUR CANDIDATES"
@@ -69,5 +69,18 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_natl_candidates"/>
+
+        <Button
+            android:id="@+id/btn_parties"
+            android:text="All Candidates by Party"
+            android:textSize="24sp"
+            android:fontFamily="@font/poppins"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="#5E2750"
+            app:layout_constraintTop_toBottomOf="@id/btn_local_candidates"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,22 +7,25 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_candidate_card.view.*
+import kotlinx.android.synthetic.main.item_candidate_card_alt.view.*
 import ph.apper.android.capstone.voters.R
+import ph.apper.android.capstone.voters.fragments.PartiesFragment
 import ph.apper.android.capstone.voters.model.CandidateInfo
 
-class CandidateListAdapter(
+class PartiesCandidateListAdapter(
     val candidateList: List<CandidateInfo>,
     val context: Context,
-    val listener: OnItemClickListener)
-    :RecyclerView.Adapter<CandidateListAdapter.CandidateViewHolder>(){
+    val listener: OnItemClickListener
+)
+    :RecyclerView.Adapter<PartiesCandidateListAdapter.CandidateViewHolder>(){
 
     inner class CandidateViewHolder(view: View):
         RecyclerView.ViewHolder(view), View.OnClickListener
         {
             val img_candidate = view.img_candidate
             val tv_candidate_name = view.tv_candidate_name
-
+            val tv_candidate_party = view.tv_candidate_party
+            val tv_candidate_position = view.tv_candidate_position
             init{
                 view.setOnClickListener(this)
             }
@@ -41,12 +44,14 @@ class CandidateListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CandidateViewHolder {
         return CandidateViewHolder(
             LayoutInflater.from(context)
-                .inflate(R.layout.item_candidate_card, parent, false)
+                .inflate(R.layout.item_candidate_card_alt, parent, false)
         )
     }
 
     override fun onBindViewHolder(holder: CandidateViewHolder, position: Int) {
-        holder?.tv_candidate_name.text = candidateList.get(position).name
+        holder.tv_candidate_name.text = candidateList.get(position).name
+        holder.tv_candidate_party.text = candidateList.get(position).party
+        holder.tv_candidate_position.text = candidateList.get(position).position
         candidateList.get(position).image?.let{
             Picasso
                 .with(this.context)

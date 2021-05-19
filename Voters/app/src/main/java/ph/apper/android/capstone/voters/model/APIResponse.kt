@@ -110,6 +110,8 @@ class CandidateInfo{
     var district = ""
     @SerializedName("image")
     var image = ""
+    @SerializedName("position_number")
+    var positionNumber = ""
 }
 
 class GetCandidateListResponse{

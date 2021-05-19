@@ -17,6 +17,10 @@ interface CandidateAPI {
     fun getNationalCandidates(@Path("position") position: String)
             : Call<GetCandidateListResponse>
 
+    @GET("candidates/")
+    fun getCandidates()
+            : Call<GetCandidateListResponse>
+
     @GET("candidates/national/{id}")
     fun getCandidateProfile(@Path("id") id: String)
             : Call<GetCandidateListResponse>

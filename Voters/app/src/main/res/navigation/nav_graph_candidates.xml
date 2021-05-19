@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_candidatesLevelFragment_to_localPositionsFragment"
             app:destination="@id/localPositionsFragment" />
+        <action
+            android:id="@+id/action_candidatesLevelFragment_to_partiesFragment"
+            app:destination="@id/partiesFragment" />
     </fragment>
     <fragment
         android:id="@+id/candidatesFragment"
@@ -60,6 +63,15 @@
         <action
             android:id="@+id/action_nationalPositionsFragment_to_localPositionsFragment"
             app:destination="@id/localPositionsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/partiesFragment"
+        android:name="ph.apper.android.capstone.voters.fragments.PartiesFragment"
+        android:label="fragment_parties"
+        tools:layout="@layout/fragment_parties" >
+        <action
+              android:id="@+id/action_partiesFragment_to_candidateProfileFragment"
+              app:destination="@id/candidateProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/localCandidatesByPositionFragment"
