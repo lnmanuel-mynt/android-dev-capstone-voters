@@ -50,7 +50,7 @@
             app:layout_constraintTop_toBottomOf="@+id/img_candidate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/rv_running_mates">
+            app:layout_constraintBottom_toTopOf="@+id/linear_layout">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -159,12 +159,27 @@
                     android:textSize="16sp"/>
             </TableRow>
     </TableLayout>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_running_mates"
+    <LinearLayout
+        android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/tb_candidate_info"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="RUNNINGMATES"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_running_mates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
