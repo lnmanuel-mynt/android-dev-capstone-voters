@@ -32,6 +32,7 @@ class PartiesCandidateListAdapter(
             val tv_candidate_name = view.tv_candidate_name
             val tv_candidate_party = view.tv_candidate_party
             val tv_candidate_position = view.tv_candidate_position
+            val tv_indicator = view.indicator
             init{
                 view.setOnClickListener(this)
             }
@@ -71,9 +72,9 @@ class PartiesCandidateListAdapter(
         if (current != prev) {
             val rnd = Random()
             color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
-            holder.itemView.setBackgroundColor(color)
+            holder.tv_indicator.setBackgroundColor(color)
         } else {
-            holder.itemView.setBackgroundColor(color)
+            holder.tv_indicator.setBackgroundColor(color)
         }
         prev = current
     }
