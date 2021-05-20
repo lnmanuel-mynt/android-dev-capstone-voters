@@ -50,11 +50,16 @@ class CandidatesFragment : Fragment(), CandidateListAdapter.OnItemClickListener 
 
     override fun onItemClick(position: Int) {
         CandidateActivity.selectedCandidate = CandidateActivity.candidateList[position]
-        getRunningMatesList(
-            CandidateActivity.candidateList[position].party,
-            CandidateActivity.candidateList[position].province,
-            CandidateActivity.candidateList[position].municipality
+        if( CandidateActivity.candidateList[position].is_national == "0") {
+            getRunningMatesList(
+                CandidateActivity.candidateList[position].party,
+                CandidateActivity.candidateList[position].province,
+                CandidateActivity.candidateList[position].municipality
             )
+        }else{
+            navController.navigate(R.id.action_candidatesFragment_to_candidateProfileFragment)
+        }
+
     }
 
     private fun getRunningMatesList(party:String, province:String, municipality:String){
