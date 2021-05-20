@@ -80,6 +80,7 @@ class CandidatesFragment : Fragment(), CandidateListAdapter.OnItemClickListener 
             ) {
                 if(response.code() == 404){
                     Log.d("GET REQUEST: ", "NO DATA")
+                    navController.navigate(R.id.action_candidatesFragment_to_candidateProfileFragment)
                     return
                 }
                 CandidateActivity.populateRunningMatesList(response.body()?.candidateList)
