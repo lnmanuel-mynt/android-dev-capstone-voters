@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.CandidateProfileFragment">
+    tools:context=".fragments.CandidateProfileFragment"
+    android:paddingBottom="20dp">
 
     <TextView
         android:id="@+id/tv_profile"
@@ -162,9 +163,8 @@
     <LinearLayout
         android:id="@+id/linear_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/tb_candidate_info"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -174,7 +174,8 @@
             android:layout_gravity="center_horizontal"
             android:text="RUNNINGMATES"
             android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_running_mates"
             android:layout_width="match_parent"
