@@ -19,8 +19,6 @@ class   CandidateActivity : AppCompatActivity(){
         var candidateList: List<CandidateInfo> = ArrayList()
         var runningMatesList: ArrayList<CandidateInfo> = ArrayList()
 
-        //var candidateList: ArrayList<CandidateInfo> = ArrayList()
-
         var candidatePosition: String = ""
         var userProvince: String = ""
         var userMunicipality: String = ""
@@ -35,9 +33,17 @@ class   CandidateActivity : AppCompatActivity(){
         }
 
         fun populateRunningMatesList(items: ArrayList<CandidateInfo>?){
+            runningMatesList.clear()
+            if(selectedCandidate.party == "Independent") {
+                items!!.filterTo(runningMatesList, {
+                    it.party != "Independent"
+                })
+                return
+            }
             items!!.filterTo(runningMatesList, {
                 it.name != selectedCandidate.name
             })
+
         }
 
         var selectedCandidate: CandidateInfo = CandidateInfo()
