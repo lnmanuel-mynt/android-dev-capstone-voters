@@ -6,16 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.HorizontalScrollView
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.recyclerview.widget.GridLayoutManager
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_candidate_profile.*
 import kotlinx.android.synthetic.main.fragment_candidate_profile.view.*
-import kotlinx.android.synthetic.main.fragment_candidates.view.*
 import ph.apper.android.capstone.voters.CandidateActivity
 import ph.apper.android.capstone.voters.R
 import ph.apper.android.capstone.voters.adapters.RunningMateListAdapter
@@ -57,6 +53,7 @@ class CandidateProfileFragment : Fragment(), RunningMateListAdapter.OnItemClickL
     override fun onDestroyView() {
         super.onDestroyView()
         CandidateActivity.clearArray()
+        CandidateActivity.selectedCandidate = CandidateInfo()
     }
 
     override fun onItemClick(position: Int) {
@@ -96,12 +93,34 @@ class CandidateProfileFragment : Fragment(), RunningMateListAdapter.OnItemClickL
     }
 
     private fun loadInfo(selectedCandidate: CandidateInfo){
+
         tv_candidate_name.text = selectedCandidate.name
         tv_position.text = selectedCandidate.position
         tv_party.text = selectedCandidate.party
-        tv_province.text = selectedCandidate.province
-        tv_municipality.text = selectedCandidate.municipality
-        tv_district.text = selectedCandidate.district
+
+        if(selectedCandidate.province == ""){
+            tv_province_label.text = ""
+            tv_province.text = ""
+        }else{
+            tv_province_label.text = "Province"
+            tv_province.text = selectedCandidate.province
+        }
+
+        if(selectedCandidate.municipality == ""){
+            tv_municipality_label.text = ""
+            tv_municipality.text = ""
+        }else{
+            tv_municipality_label.text = "Municipality"
+            tv_municipality.text = selectedCandidate.municipality
+        }
+
+        if(selectedCandidate.district == ""){
+            tv_district_label.text = ""
+            tv_district.text = ""
+        }else{
+            tv_district_label.text = "District"
+            tv_district.text = selectedCandidate.district
+        }
 
         selectedCandidate.image?.let {
             Picasso
@@ -112,6 +131,9 @@ class CandidateProfileFragment : Fragment(), RunningMateListAdapter.OnItemClickL
                     .error(R.drawable.ic_user)
                     .into(img_candidate)
         }
+
+        if(CandidateActivity.runningMatesList.isEmpty())
+            tv_running_mates.text = ""
     }
 
 }
