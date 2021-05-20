@@ -21,6 +21,7 @@ import ph.apper.android.capstone.voters.model.GetCandidateListResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 
 class CandidatesLevelFragment : Fragment(), View.OnClickListener {
@@ -97,7 +98,7 @@ class CandidatesLevelFragment : Fragment(), View.OnClickListener {
                 }
                 val sortedList = response.body()?.candidateList
                 sortedList?.removeAll { it.position == "PartyList" }
-                val finalList = sortedList?.sortedWith(compareBy({it.party}, {it.positionNumber.toInt()}))
+                val finalList = sortedList?.sortedWith(compareBy({it.party.toLowerCase(Locale.ENGLISH)}, {it.positionNumber.toInt()}))
                 CandidateActivity.populateList(finalList)
                 navController.navigate(R.id.action_candidatesLevelFragment_to_partiesFragment)
             }
