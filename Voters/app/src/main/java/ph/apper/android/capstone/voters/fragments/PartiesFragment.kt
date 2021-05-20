@@ -52,11 +52,15 @@ class PartiesFragment: Fragment(), PartiesCandidateListAdapter.OnItemClickListen
 
     override fun onItemClick(position: Int) {
         CandidateActivity.selectedCandidate = CandidateActivity.candidateList[position]
-        getRunningMatesList(
-            CandidateActivity.candidateList[position].party,
-            CandidateActivity.candidateList[position].province,
-            CandidateActivity.candidateList[position].municipality
-        )
+        if( CandidateActivity.candidateList[position].is_national == "0" ) {
+            getRunningMatesList(
+                    CandidateActivity.candidateList[position].party,
+                    CandidateActivity.candidateList[position].province,
+                    CandidateActivity.candidateList[position].municipality
+            )
+        }else {
+            navController.navigate(R.id.action_partiesFragment_to_candidateProfileFragment)
+        }
     }
 
     private fun getRunningMatesList(party:String, province:String, municipality:String){
@@ -77,6 +81,7 @@ class PartiesFragment: Fragment(), PartiesCandidateListAdapter.OnItemClickListen
             ) {
                 if(response.code() == 404){
                     Log.d("GET REQUEST: ", "NO DATA")
+                    navController.navigate(R.id.action_partiesFragment_to_candidateProfileFragment)
                     return
                 }
                 CandidateActivity.populateRunningMatesList(response.body()?.candidateList)
