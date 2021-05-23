@@ -205,16 +205,12 @@ app.get(
         var municipality = req.params.municipality;
         var selectQry = "SELECT * FROM ?? where ?? = ? and ?? = ?";
         let query = "";
-        if (municipality != "null")
-            query = mysql.format(selectQry, [
-                "candidates",
-                "municipality",
-                municipality,
-                "position",
-                position,
-            ]);
+	let isGovernor = position === "GOVERNOR"
+	let isVGovernor = position === "VICE-GOVERNOR"
+	let isSP = position === "SANGGUNIANG PALALAWIGAN"
+	let isCongressman = position === "CONGRESSMAN"
 
-        if (municipality == "null" && province != "")
+        if (isGovernor || isVGovernor || isSP || isCongressman){
             query = mysql.format(selectQry, [
                 "candidates",
                 "province",
@@ -222,6 +218,15 @@ app.get(
                 "position",
                 position,
             ]);
+	}else{
+            query = mysql.format(selectQry, [
+                "candidates",
+                "municipality",
+                municipality,
+                "position",
+                position,
+            ]);
+	}
         try {
             candidates = await db_query(query, dbPool);
             if (candidates == "")
@@ -240,6 +245,22 @@ app.get(
     }
 );
 
+app.get("/candidates/partylist/:partylistname", async (req, res) => {
+	var partyList = req.params.partylistname
+	var selectQry = "SELECT * FROM ?? where ?? = ?"
+	let query = mysql.format(selectQry, ["candidates", "partylist", partyList])
+	
+	try{
+		candidates = await db_query(query, dbPool);
+		if (candidates == "")
+			return res.status(404).send("None")
+		candidatesList = await getImageURL(candidates);
+		return res.status(200).send({candidates: candidatesList});
+	}catch (err) {
+		return res.status(400).send("None")
+	}
+
+})
 app.get("/candidates/national/:position", async (req, res) => {
     var position = req.params.position;
 
@@ -259,7 +280,6 @@ app.get("/candidates/national/:position", async (req, res) => {
                 .status(404)
                 .send({ message: "No Candidates for this Position." });
         candidatesList = await getImageURL(candidates);
-        console.log(candidatesList);
         return res.status(200).send({ candidates: candidatesList });
     } catch (err) {
         return res.status(400).send({
@@ -268,6 +288,56 @@ app.get("/candidates/national/:position", async (req, res) => {
     }
 });
 
+app.get("/candidates/local/:province&:municipality", async(req, res) => {
+	var province = req.params.province
+	var municipality = req.params.municipality
+
+	let selectQry = "SELECT * FROM candidates where ?? = ? AND ?? = ? ORDER BY ?? ASC"
+	let query = mysql.format(selectQry, [
+		"province",
+		province,
+		"municipality",
+		municipality,
+		"position_number"
+	])
+
+	try {
+		candidates = await db_query(query, dbPool)
+		if (candidates ==  "")
+			return res.status(404).send("No Data")
+
+		candidatesList = await getImageURL(candidates)
+		return res.status(200).send({candidates: candidatesList})
+	}catch (err){
+		console.log(err)
+	}
+})
+app.get("/candidates/runningmates/:party&:province&:municipality", async (req, res) => {
+	var party = req.params.party
+	var province = req.params.province
+	var municipality = req.params.municipality
+
+	let selectQry = "SELECT * FROM candidates WHERE ?? = ? AND ?? = ? AND ?? = ?"
+	query = mysql.format(selectQry, [
+		"party",
+		party,
+		"province",
+		province,
+		"municipality",
+		municipality
+	])
+	
+	try { 
+		candidates = await db_query(query, dbPool);
+		if (candidates == "")
+			return res.status(404).send("No data")
+
+		candidatesList = await getImageURL(candidates)
+		return res.status(200).send({candidates: candidatesList})
+	}catch (err){
+		console.log(err)
+	}
+})
 app.get("/candidates/:id", async (req, res) => {
     var candidateId = req.params.id;
 
@@ -340,10 +410,8 @@ app.post("/confirmvoter", async (req, res) => {
     var voterIdNumber = req.body.voter_id_number;
 
     var updateQry =
-        "UPDATE voters SET ?? = ?, ?? = ? , ?? = ?, ?? = ? where app_user_id = UUID_TO_BIN(?)";
+        "UPDATE voters SET ?? = ? , ?? = ?, ?? = ? where id = UUID_TO_BIN(?)";
     let query = mysql.format(updateQry, [
-        "isRegistered",
-        true,
         "voter_id_number",
         voterIdNumber,
         "precinct_number",
@@ -383,7 +451,7 @@ app.get("/voters", async (req, res) => {
         rows = rows.map((v) => Object.assign({}, v));
         await rows.forEach((row) => {
             try {
-                row.app_user_id = Bin2HexUUID(row.app_user_id);
+                row.id = Bin2HexUUID(row.id);
             } catch (err) {
                 console.log("Error parsing BIN TO UUID");
             }
@@ -417,6 +485,18 @@ async function getUserByEmail(email, table) {
     }
 }
 
+app.get("/candidates", async (req, res) => {
+	let query = mysql.format("SELECT * FROM candidates")
+	try{
+		var rows = await db_query(query, dbPool);
+		var candidatesList = await getImageURL(rows)
+		return res.status(200).send({
+			"candidates" : candidatesList
+		})
+	} catch (err) {
+		console.log(err)
+	}
+})
 async function getUserById(id, table) {
     var selectQry = "SELECT * FROM ?? WHERE BIN_TO_UUID(??) = ?";
 
